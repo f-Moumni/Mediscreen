@@ -29,7 +29,8 @@ public class Patient {
 
     @NotBlank(message = "the last birthdate cannot be empty or null")
     private LocalDate birthdate;
-    @Enumerated()
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     private String address;
