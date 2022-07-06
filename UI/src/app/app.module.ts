@@ -6,7 +6,7 @@ import {AppComponent} from './app.component';
 import {PatientListComponent} from './components/patient-list/patient-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,7 +19,8 @@ import {FormsModule} from "@angular/forms";
     HttpClientModule,
     AppRoutingModule,
     Ng2SearchPipeModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from "../../model/patient.model";
 import {Router} from "@angular/router";
 import {PatientService} from "../../service/patient.service";
-import {map, take} from "rxjs";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {BehaviorSubject, map, take} from "rxjs";
 
 @Component({
   selector: 'app-patient-list',
@@ -12,9 +13,12 @@ import {map, take} from "rxjs";
 export class PatientListComponent implements OnInit {
   patients!: Patient [];
   searchTerm!: string;
+  editForm!: FormGroup;
+  isLoad = false;
+  // @ts-ignore
+  dataSubject = new BehaviorSubject<Patient[]>(null);
 
-
-  constructor(private router: Router, private patientService: PatientService) {
+  constructor(private router: Router, private patientService: PatientService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
@@ -22,21 +26,41 @@ export class PatientListComponent implements OnInit {
   }
 
   getPatients() {
-    this.patientService.getPatients().subscribe(ps => {
-      this.patients=ps;
-    })
+    this.patientService.getPatients().pipe(
+      take(1),
+      map(ps => {
+        this.patients = ps;
+        this.dataSubject.next(ps)
+        return ps
+      })).subscribe()
   }
 
   doRemove(patient: Patient) {
 
   }
 
-  doUpdate(patient: Patient) {
+  onKeyUp(filterText: string) {
+    this.patients = this.patients.filter(item =>
+      item.firstName.toLowerCase().includes(filterText));
+  }
+
+  onLoadEditForm(patient: Patient) {
+    this.isLoad = true;
+    this.editForm = this.formBuilder.group(patient);
 
   }
 
-  onKeyUp(filterText : string){
-    this.patients = this.patients.filter(item =>
-      item.firstName.toLowerCase().includes(filterText));
+
+  onEditPatient() {
+    let patient = this.editForm.value
+    this.patientService.updatePatient(patient).pipe(
+      take(1),
+      map(p => {
+        this.dataSubject.next([
+          ...this.dataSubject.value.filter((p => p.id !== patient.id))]);
+        this.dataSubject.next([
+          ...this.dataSubject.value, p]);
+        this.patients = this.dataSubject.value;
+      })).subscribe()
   }
 }

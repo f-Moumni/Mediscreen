@@ -26,8 +26,8 @@ public class Patient {
     @Column(name = "last_name", nullable = false)
     @NotBlank(message = "the last name cannot be empty or null")
     private String    lastName;
+
     @Column(nullable = false)
-    @NotBlank(message = "the last birthdate cannot be empty or null")
     private LocalDate birthdate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
