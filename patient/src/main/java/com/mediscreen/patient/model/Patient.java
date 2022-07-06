@@ -42,6 +42,17 @@ public class Patient {
 
     }
 
+    public Patient(long id, String firstName, String lastName, LocalDate birthdate, Gender gender, String address, String phone) {
+
+        this.id        = id;
+        this.firstName = firstName;
+        this.lastName  = lastName;
+        this.birthdate = birthdate;
+        this.gender    = gender;
+        this.address   = address;
+        this.phone     = phone;
+    }
+
     public Patient(String firstName, String lastName, LocalDate birthdate, Gender gender, String address, String phone) {
 
         this.firstName = firstName;

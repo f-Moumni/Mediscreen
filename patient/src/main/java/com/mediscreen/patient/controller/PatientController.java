@@ -42,8 +42,10 @@ public class PatientController {
 
         return new ResponseEntity<Patient>(patientService.savePatient(patient), CREATED);
     }
+
     @DeleteMapping
-    public ResponseEntity<Patient> RemovePatient(@RequestParam @Valid long id) throws RessourceNotFoundException {
-        return new ResponseEntity<Patient>(patientService.deletePatient(id), CREATED);
+    public ResponseEntity<Patient> removePatient(@RequestParam @Valid long id) throws RessourceNotFoundException {
+
+        return new ResponseEntity<Patient>(patientService.deletePatient(id), OK);
     }
 }
