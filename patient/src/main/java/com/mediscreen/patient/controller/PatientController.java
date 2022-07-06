@@ -1,17 +1,18 @@
 package com.mediscreen.patient.controller;
 
-import com.mediscreen.patient.dto.Response;
 
+import com.mediscreen.patient.model.Patient;
 import com.mediscreen.patient.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.springframework.http.HttpStatus.OK;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 
-import java.util.Map;
-
-import static java.time.LocalDateTime.now;
+import static org.springframework.http.HttpStatus.OK;
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/patient")
@@ -24,15 +25,7 @@ public class PatientController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<Response> getAllPatient(){
-        return  ResponseEntity.ok(
-                Response.builder()
-                        .timeStamp(now())
-                        .data(Map.of("patients",patientService.getAllPatients()))
-                        .message("all patients got successfully")
-                        .status(OK)
-                        .statusCode(OK.value())
-                        .build()
-        );
+    public ResponseEntity<List<Patient>> getAllPatient(){
+        return new ResponseEntity<List<Patient>>(patientService.getAllPatients(), OK);
     }
 }

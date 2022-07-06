@@ -11,6 +11,8 @@ import {map, take} from "rxjs";
 })
 export class PatientListComponent implements OnInit {
   patients!: Patient [];
+  searchTerm!: string;
+
 
   constructor(private router: Router, private patientService: PatientService) {
   }
@@ -20,13 +22,9 @@ export class PatientListComponent implements OnInit {
   }
 
   getPatients() {
-    this.patientService.getPatients().pipe(
-      take(1),
-      map(response => {
-        this.patients = response.data.patients;
-        return response.data.patients
-      })
-    ).subscribe()
+    this.patientService.getPatients().subscribe(ps => {
+      this.patients=ps;
+    })
   }
 
   doRemove(patient: Patient) {
@@ -35,5 +33,10 @@ export class PatientListComponent implements OnInit {
 
   doUpdate(patient: Patient) {
 
+  }
+
+  onKeyUp(filterText : string){
+    this.patients = this.patients.filter(item =>
+      item.firstName.toLowerCase().includes(filterText));
   }
 }
