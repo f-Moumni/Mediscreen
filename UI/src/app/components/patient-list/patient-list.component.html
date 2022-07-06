@@ -47,7 +47,7 @@
             data-toggle="tooltip"
             title="Edit"
           >&#xE254;</i></a>
-            <a class="delete" data-toggle="modal" href="#deletePatientModal"><i
+            <a (click)="onLoaDeleteForm(patient)" class="delete" data-toggle="modal" href="#deletePatientModal"><i
               class="material-icons"
               data-toggle="tooltip"
               title="Delete"
@@ -177,7 +177,7 @@
         </div>
         <div class="modal-footer">
           <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-          <input class="btn btn-danger" type="submit" value="Delete">
+          <input class="btn btn-danger" type="submit" value="Delete" (click)="doRemovePatient()">
         </div>
       </form>
     </div>

@@ -1,6 +1,5 @@
 package com.mediscreen.patient.service;
 
-import com.mediscreen.patient.exception.AlreadyExistsException;
 import com.mediscreen.patient.exception.RessourceNotFoundException;
 import com.mediscreen.patient.model.Patient;
 import com.mediscreen.patient.repository.PatientRepository;
@@ -23,16 +22,28 @@ public class PatientService {
     }
 
     public List<Patient> getAllPatients() {
+
         return patientRepository.findAll();
     }
 
     public Patient updatePatient(Patient patient) throws RessourceNotFoundException {
-         Patient patientToUpdate = patientRepository.findById(patient.getId()).orElseThrow(()->  new RessourceNotFoundException("user with id: " +patient.getId()+" not found"));
+        Patient patientToUpdate = findById(patient.getId());
         return patientRepository.save(patient);
     }
 
-    public Patient savePatient(Patient patient){
+    public Patient savePatient(Patient patient) {
         return patientRepository.save(patient);
     }
 
+    public Patient deletePatient(long id) throws RessourceNotFoundException {
+
+        Patient patientToDelete = findById(id);
+        patientRepository.delete(patientToDelete);
+        return patientToDelete;
+    }
+
+    private Patient findById(long id) throws RessourceNotFoundException {
+        return patientRepository.findById(id)
+                                .orElseThrow(() -> new RessourceNotFoundException("user with id: " + id + " not found"));
+    }
 }

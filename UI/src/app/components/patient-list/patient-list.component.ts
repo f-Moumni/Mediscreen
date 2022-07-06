@@ -18,6 +18,7 @@ export class PatientListComponent implements OnInit {
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
   saveForm!: FormGroup;
+  patient !: Patient;
 
   constructor(private router: Router, private patientService: PatientService, private formBuilder: FormBuilder) {
   }
@@ -42,10 +43,6 @@ export class PatientListComponent implements OnInit {
         this.dataSubject.next(ps)
         return ps
       })).subscribe()
-  }
-
-  doRemove(patient: Patient) {
-
   }
 
 
@@ -80,8 +77,20 @@ export class PatientListComponent implements OnInit {
       })).subscribe()
   }
 
-
   onLoadAddForm() {
     this.saveForm.reset();
+  }
+  onLoaDeleteForm(patient: Patient) {
+    this.patient = patient;
+  }
+
+  doRemovePatient() {
+    this.patientService.removePatient(this.patient).pipe(
+      take(1),
+      map(p => {
+        this.dataSubject.next([
+          ...this.dataSubject.value.filter((p => p.id !== this.patient.id))]);
+        this.patients = this.dataSubject.value;
+      })).subscribe()
   }
 }
