@@ -1,7 +1,7 @@
 import {Gender} from "../enum/Gender.enum";
 
 export class Patient {
-  id!: number;
+  id?: number;
   firstName!: string;
   lastName!: string;
   birthdate!: Date;

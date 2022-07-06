@@ -31,5 +31,8 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
+    public Patient savePatient(Patient patient){
+        return patientRepository.save(patient);
+    }
 
 }

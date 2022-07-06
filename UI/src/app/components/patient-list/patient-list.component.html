@@ -15,7 +15,7 @@
               class="btn btn-success"
               data-toggle="modal"
               href="#addPatientModal"
-            ><i class="material-icons">&#xE147;</i> <span>Add New Patient</span></a>
+              (click)="onLoadAddForm()"><i class="material-icons">&#xE147;</i> <span>Add New Patient</span></a>
 
           </div>
         </div>
@@ -64,7 +64,7 @@
 <div class="modal fade" id="addPatientModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form>
+      <form (ngSubmit)="onSavePatient()" [formGroup]="saveForm">
         <div class="modal-header">
           <h4 class="modal-title">Add Patient</h4>
           <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
@@ -72,23 +72,33 @@
         <div class="modal-body">
           <div class="form-group">
             <label>First Name</label>
-            <input class="form-control" name="firstName" required type="text">
+            <input class="form-control" formControlName="firstName" required type="text">
           </div>
           <div class="form-group">
             <label>Last Name</label>
-            <input class="form-control" name="lastName" required type="text">
+            <input class="form-control" formControlName="lastName" required type="text">
           </div>
           <div class="form-group">
             <label>Birthdate</label>
-            <input class="form-control" name="birthdate" required type="Date">
+            <input class="form-control" formControlName="birthdate" required type="Date">
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select
+              class="form-control"
+              formControlName="gender" required
+            >
+              <option value="FEMININE">FEMININE</option>
+              <option value="MASCULINE">MASCULINE</option>
+            </select>
           </div>
           <div class="form-group">
             <label>Address</label>
-            <textarea class="form-control" name="address" ></textarea>
+            <textarea class="form-control" formControlName="address"></textarea>
           </div>
           <div class="form-group">
             <label>Phone</label>
-            <input class="form-control" name="phone"  type="text">
+            <input class="form-control" formControlName="phone" type="text">
           </div>
         </div>
         <div class="modal-footer">
@@ -103,7 +113,7 @@
 <div class="modal fade" id="editPatientModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form *ngIf="isLoad" [formGroup]="editForm" (ngSubmit)="onEditPatient()">
+      <form (ngSubmit)="onEditPatient()" *ngIf="isLoad" [formGroup]="editForm">
         <div class="modal-header">
           <h4 class="modal-title">Edit Patient</h4>
           <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
@@ -126,17 +136,27 @@
             <input class="form-control" formControlName="birthdate" required type="Date">
           </div>
           <div class="form-group">
+            <label>Gender</label>
+            <select
+              class="form-control"
+              formControlName="gender" required
+            >
+              <option value="FEMININE">FEMININE</option>
+              <option value="MASCULINE">MASCULINE</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label>Address</label>
-            <textarea class="form-control" formControlName="address" ></textarea>
+            <textarea class="form-control" formControlName="address"></textarea>
           </div>
           <div class="form-group">
             <label>Phone</label>
-            <input class="form-control" formControlName="phone"  type="text">
+            <input class="form-control" formControlName="phone" type="text">
           </div>
         </div>
         <div class="modal-footer">
           <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-          <input class="btn btn-info" type="submit" value="Save" >
+          <input class="btn btn-info" type="submit" value="Save">
         </div>
       </form>
     </div>

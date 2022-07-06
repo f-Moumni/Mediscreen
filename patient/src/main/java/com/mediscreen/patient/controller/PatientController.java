@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/patient")
@@ -24,12 +26,20 @@ public class PatientController {
 
 
     @GetMapping("/all")
-    public ResponseEntity<List<Patient>> getAllPatient(){
+    public ResponseEntity<List<Patient>> getAllPatient() {
+
         return new ResponseEntity<List<Patient>>(patientService.getAllPatients(), OK);
     }
 
     @PutMapping
-    public ResponseEntity<Patient>update(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
+    public ResponseEntity<Patient> updatePatient(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
+
         return new ResponseEntity<Patient>(patientService.updatePatient(patient), OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Patient> addPatient(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
+
+        return new ResponseEntity<Patient>(patientService.savePatient(patient), CREATED);
     }
 }

@@ -20,4 +20,8 @@ export class PatientService {
   updatePatient(patient: Patient):Observable<any> {
     return this.http.put<any>(API + `/patient`,patient, httpOptions);
   }
+
+  savePatient(patient: Patient) :Observable<any> {
+      return this.http.post<any>(API + `/patient`,patient, httpOptions);
+  }
 }

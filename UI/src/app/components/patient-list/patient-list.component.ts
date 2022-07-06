@@ -17,12 +17,21 @@ export class PatientListComponent implements OnInit {
   isLoad = false;
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
+  saveForm!: FormGroup;
 
   constructor(private router: Router, private patientService: PatientService, private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.getPatients();
+    this.saveForm = this.formBuilder.group({
+      firstName: [null],
+      lastName: [null],
+      birthdate: [null],
+      gender: [null],
+      address: [null],
+      phone: [null]
+    })
   }
 
   getPatients() {
@@ -39,10 +48,6 @@ export class PatientListComponent implements OnInit {
 
   }
 
-  onKeyUp(filterText: string) {
-    this.patients = this.patients.filter(item =>
-      item.firstName.toLowerCase().includes(filterText));
-  }
 
   onLoadEditForm(patient: Patient) {
     this.isLoad = true;
@@ -62,5 +67,21 @@ export class PatientListComponent implements OnInit {
           ...this.dataSubject.value, p]);
         this.patients = this.dataSubject.value;
       })).subscribe()
+  }
+
+  onSavePatient() {
+    let patient = this.saveForm.value
+    this.patientService.savePatient(patient).pipe(
+      take(1),
+      map(p => {
+        this.dataSubject.next([
+          ...this.dataSubject.value, p]);
+        this.patients = this.dataSubject.value;
+      })).subscribe()
+  }
+
+
+  onLoadAddForm() {
+    this.saveForm.reset();
   }
 }
