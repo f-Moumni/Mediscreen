@@ -26,15 +26,7 @@ public class PatientDto {
         this.phone   = phone;
     }
 
-    public PatientDto(String family, String given, String dob, String sex, String address, String phone) {
 
-        this.family  = family;
-        this.given   = given;
-        this.dob     = dob;
-        this.sex     = sex;
-        this.address = address;
-        this.phone   = phone;
-    }
 
     public long getId() {
 

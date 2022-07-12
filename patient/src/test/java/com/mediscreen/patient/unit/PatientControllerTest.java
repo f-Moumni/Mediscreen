@@ -1,8 +1,9 @@
-package com.mediscreen.patient.service;
+package com.mediscreen.patient.unit;
 
 import com.mediscreen.patient.constant.Gender;
 import com.mediscreen.patient.controller.PatientController;
 import com.mediscreen.patient.model.Patient;
+import com.mediscreen.patient.service.PatientService;
 import com.mediscreen.patient.util.JsonTestMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,7 +31,7 @@ public class PatientControllerTest {
     private MockMvc        mvc;
     @MockBean
     private PatientService patientService;
-    private Patient        patient = new Patient(1, "john", "doe", now(), Gender.MASCULINE, "0890009", "rue des nations");
+    private Patient        patient = new Patient(1, "john", "doe", now(), Gender.MASCULINE,  "rue des nations","0890009");
 
     @Test
     void getAllPatientsTest_shouldReturnListOfPatients() throws Exception {

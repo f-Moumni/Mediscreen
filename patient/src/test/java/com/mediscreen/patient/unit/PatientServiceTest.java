@@ -1,9 +1,10 @@
-package com.mediscreen.patient.service;
+package com.mediscreen.patient.unit;
 
 import com.mediscreen.patient.constant.Gender;
 import com.mediscreen.patient.exception.RessourceNotFoundException;
 import com.mediscreen.patient.model.Patient;
 import com.mediscreen.patient.repository.PatientRepository;
+import com.mediscreen.patient.service.PatientService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

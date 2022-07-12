@@ -36,7 +36,7 @@ public class PatientCurlController {
 
         List<PatientDto> patientDtoList = patientService.getAllPatients()
                                                         .stream()
-                                                        .map(patientMapper::ToPatientDto)
+                                                        .map(patientMapper::toPatientDto)
                                                         .collect(Collectors.toList());
         return new ResponseEntity<>(patientDtoList, OK);
     }
@@ -44,18 +44,18 @@ public class PatientCurlController {
     @PutMapping(value = "update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDto> updatePatient(@Valid PatientDto patientDto) throws RessourceNotFoundException {
 
-        return new ResponseEntity<>(patientMapper.ToPatientDto(patientService.updatePatient(patientMapper.ToPatient(patientDto))), OK);
+        return new ResponseEntity<>(patientMapper.toPatientDto(patientService.updatePatient(patientMapper.toPatient(patientDto))), OK);
     }
 
     @PostMapping(value = "add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PatientDto> addPatient(@Valid PatientDto patientDto) {
 
-        return new ResponseEntity<>(patientMapper.ToPatientDto(patientService.savePatient(patientMapper.ToPatient(patientDto))), CREATED);
+        return new ResponseEntity<>(patientMapper.toPatientDto(patientService.savePatient(patientMapper.toPatient(patientDto))), CREATED);
     }
 
     @DeleteMapping("remove")
     public ResponseEntity<PatientDto> removePatient(@Valid long id) throws RessourceNotFoundException {
 
-        return new ResponseEntity<>(patientMapper.ToPatientDto(patientService.deletePatient(id)), OK);
+        return new ResponseEntity<>(patientMapper.toPatientDto(patientService.deletePatient(id)), OK);
     }
 }

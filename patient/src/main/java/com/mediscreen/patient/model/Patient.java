@@ -7,11 +7,10 @@ import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "patient")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     /**
@@ -54,15 +53,7 @@ public class Patient {
         this.phone     = phone;
     }
 
-    public Patient(String firstName, String lastName, LocalDate birthdate, Gender gender, String address, String phone) {
 
-        this.firstName = firstName;
-        this.lastName  = lastName;
-        this.birthdate = birthdate;
-        this.gender    = gender;
-        this.address   = address;
-        this.phone     = phone;
-    }
 
     public long getId() {
 
