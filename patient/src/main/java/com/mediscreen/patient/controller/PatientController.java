@@ -28,24 +28,24 @@ public class PatientController {
     @GetMapping("/all")
     public ResponseEntity<List<Patient>> getAllPatient() {
 
-        return new ResponseEntity<List<Patient>>(patientService.getAllPatients(), OK);
+        return new ResponseEntity<>(patientService.getAllPatients(), OK);
     }
 
     @PutMapping
     public ResponseEntity<Patient> updatePatient(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
 
-        return new ResponseEntity<Patient>(patientService.updatePatient(patient), OK);
+        return new ResponseEntity<>(patientService.updatePatient(patient), OK);
     }
 
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
+    public ResponseEntity<Patient> addPatient(@RequestBody @Valid Patient patient)  {
 
-        return new ResponseEntity<Patient>(patientService.savePatient(patient), CREATED);
+        return new ResponseEntity<>(patientService.savePatient(patient), CREATED);
     }
 
     @DeleteMapping
     public ResponseEntity<Patient> removePatient(@RequestParam @Valid long id) throws RessourceNotFoundException {
 
-        return new ResponseEntity<Patient>(patientService.deletePatient(id), OK);
+        return new ResponseEntity<>(patientService.deletePatient(id), OK);
     }
 }
