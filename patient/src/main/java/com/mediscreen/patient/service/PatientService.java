@@ -27,11 +27,13 @@ public class PatientService {
     }
 
     public Patient updatePatient(Patient patient) throws RessourceNotFoundException {
+
         Patient patientToUpdate = findById(patient.getId());
         return patientRepository.save(patient);
     }
 
     public Patient savePatient(Patient patient) {
+
         return patientRepository.save(patient);
     }
 
@@ -42,8 +44,9 @@ public class PatientService {
         return patientToDelete;
     }
 
-    private Patient findById(long id) throws RessourceNotFoundException {
+    public Patient findById(long id) throws RessourceNotFoundException {
         return patientRepository.findById(id)
                                 .orElseThrow(() -> new RessourceNotFoundException("user with id: " + id + " not found"));
     }
+
 }

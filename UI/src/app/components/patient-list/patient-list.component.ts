@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from "../../model/patient.model";
 import {Router} from "@angular/router";
 import {PatientService} from "../../service/patient.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject, map, take} from "rxjs";
 
 @Component({
@@ -13,12 +13,12 @@ import {BehaviorSubject, map, take} from "rxjs";
 export class PatientListComponent implements OnInit {
   patients!: Patient [];
   searchTerm!: string;
-  editForm!: FormGroup;
   isLoad = false;
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
   saveForm!: FormGroup;
   patient !: Patient;
+  firstName: Boolean | any;
 
   constructor(private router: Router, private patientService: PatientService, private formBuilder: FormBuilder) {
   }
@@ -26,12 +26,21 @@ export class PatientListComponent implements OnInit {
   ngOnInit(): void {
     this.getPatients();
     this.saveForm = this.formBuilder.group({
-      firstName: [null],
-      lastName: [null],
-      birthdate: [null],
-      gender: [null],
-      address: [null],
-      phone: [null]
+      firstName: [null, [
+        Validators.required,
+        Validators.maxLength(24)]],
+      lastName: [null, [
+        Validators.required,
+        Validators.maxLength(24)]],
+      birthdate: [null, [
+        Validators.required]],
+      gender: [null,
+        Validators.required
+      ],
+      address: [null, Validators.minLength(5)],
+      phone: [null, [
+        Validators.minLength(10),
+        Validators.maxLength(20)]]
     })
   }
 
@@ -45,26 +54,6 @@ export class PatientListComponent implements OnInit {
       })).subscribe()
   }
 
-
-  onLoadEditForm(patient: Patient) {
-    this.isLoad = true;
-    this.editForm = this.formBuilder.group(patient);
-
-  }
-
-
-  onEditPatient() {
-    let patient = this.editForm.value
-    this.patientService.updatePatient(patient).pipe(
-      take(1),
-      map(p => {
-        this.dataSubject.next([
-          ...this.dataSubject.value.filter((p => p.id !== patient.id))]);
-        this.dataSubject.next([
-          ...this.dataSubject.value, p]);
-        this.patients = this.dataSubject.value;
-      })).subscribe()
-  }
 
   onSavePatient() {
     let patient = this.saveForm.value
@@ -80,6 +69,7 @@ export class PatientListComponent implements OnInit {
   onLoadAddForm() {
     this.saveForm.reset();
   }
+
   onLoaDeleteForm(patient: Patient) {
     this.patient = patient;
   }
@@ -93,4 +83,5 @@ export class PatientListComponent implements OnInit {
         this.patients = this.dataSubject.value;
       })).subscribe()
   }
+
 }

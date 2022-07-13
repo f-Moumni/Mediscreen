@@ -1,0 +1,120 @@
+<div class="container">
+
+  <form (ngSubmit)="onEditPatient()" [formGroup]="editForm" class="form-card">
+    <div class="modal-body">
+      <h3 class="h3 my-5 font-weight-normal text-center">Manage Patient</h3>
+      <div class="group-control">
+        <div class="form-group">
+          <label>Gender</label>
+          <select
+            class="form-control"
+            formControlName="gender" required
+          >
+            <option value="FEMININE">FEMININE</option>
+            <option value="MASCULINE">MASCULINE</option>
+          </select>
+          <div
+            *ngIf="editForm.controls['gender'].invalid && (editForm.controls['gender'].dirty ||
+              editForm.controls['gender'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="editForm.controls['gender'].errors?.['required']">
+              gender is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ID</label>
+          <input class="form-control" formControlName="id" readonly required type="text">
+        </div>
+      </div>
+      <div class="group-control">
+        <div class="form-group">
+          <label>First Name</label>
+          <input class="form-control" formControlName="firstName" required type="text">
+          <div
+            *ngIf="editForm.controls['firstName'].invalid && (editForm.controls['firstName'].dirty || editForm
+              .controls['firstName'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="editForm.controls['firstName'].errors?.['required']">
+              firstName is required.
+            </div>
+            <div *ngIf="editForm.controls['firstName'].errors?.['maxlength']">
+              firstName must be less than 50 characters long.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input class="form-control" formControlName="lastName" required type="text">
+          <div
+            *ngIf="editForm.controls['lastName'].invalid && (editForm.controls['lastName'].dirty ||
+              editForm.controls['lastName'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="editForm.controls['lastName'].errors?.['required']">
+              lastName is required.
+            </div>
+            <div *ngIf="editForm.controls['lastName'].errors?.['maxlength']">
+              lastName must be less than 50 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="group-control">
+        <div class="form-group">
+          <label>Birthdate</label>
+          <input class="form-control " formControlName="birthdate" required type="Date">
+          <div
+            *ngIf="editForm.controls['birthdate'].invalid && (editForm.controls['birthdate'].dirty || editForm
+              .controls['birthdate'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="editForm.controls['birthdate'].errors?.['required']">
+              birthdate is required.
+            </div>
+            <div *ngIf="editForm.controls['birthdate'].errors?.['max']">
+              birthday must be in the past
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input class="form-control" formControlName="phone" type="text">
+          <div
+            *ngIf="editForm.controls['phone'].invalid && (editForm.controls['phone'].dirty ||
+              editForm.controls['phone'].touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="editForm.controls['phone'].errors?.['minlength']">
+              phone must be at least 10 characters long.
+            </div>
+            <div *ngIf="editForm.controls['phone'].errors?.['maxlength']">
+              phone must be less than 20 characters long.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea class="form-control" formControlName="address"></textarea>
+        <div
+          *ngIf="editForm.controls['address'].invalid && (editForm.controls['address'].dirty ||
+              editForm.controls['address'].touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="editForm.controls['address'].errors?.['minlength']">
+            address must be at least 5 characters long.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input (click)="onCancel()" class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+        <input class="btn btn-info" type="submit" value="Update">
+      </div>
+    </div>
+
+  </form>
+
+</div>

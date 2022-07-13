@@ -7,11 +7,15 @@ import {PatientListComponent} from './components/patient-list/patient-list.compo
 import {HttpClientModule} from "@angular/common/http";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { PatientComponent } from './components/patient/patient.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PatientListComponent
+    PatientListComponent,
+    PatientComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

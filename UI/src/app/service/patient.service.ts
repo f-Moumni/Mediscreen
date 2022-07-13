@@ -19,15 +19,19 @@ export class PatientService {
     return this.http.get<any>(API + `/patient/all`, httpOptions);
   }
 
-  updatePatient(patient: Patient): Observable<any> {
+  public getPatientById(id :number): Observable<any> {
+    return this.http.get<any>(API + `/patient?id=${id}`,httpOptions);
+  }
+
+  public updatePatient(patient: Patient): Observable<any> {
     return this.http.put<any>(API + `/patient`, patient, httpOptions);
   }
 
-  savePatient(patient: Patient): Observable<any> {
+  public savePatient(patient: Patient): Observable<any> {
     return this.http.post<any>(API + `/patient`, patient, httpOptions);
   }
 
-  removePatient(patient :Patient): Observable<any> {
+  public removePatient(patient: Patient): Observable<any> {
     return this.http.delete<any>(API + `/patient?id=${patient.id}`, httpOptions);
   }
 }

@@ -30,6 +30,11 @@ public class PatientController {
 
         return new ResponseEntity<>(patientService.getAllPatients(), OK);
     }
+    @GetMapping
+    public ResponseEntity<Patient> getPatient(@RequestParam Long id) throws RessourceNotFoundException {
+
+        return new ResponseEntity<>(patientService.findById(id), OK);
+    }
 
     @PutMapping
     public ResponseEntity<Patient> updatePatient(@RequestBody @Valid Patient patient) throws RessourceNotFoundException {
