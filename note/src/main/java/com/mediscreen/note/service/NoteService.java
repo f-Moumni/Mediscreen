@@ -19,7 +19,8 @@ public class NoteService {
 
     public Note saveNote(Note newNote) {
 
-        return noteRepository.insert(newNote);
+        Note note = noteRepository.insert(newNote);
+        return note;
     }
 
     public Note updateNote(Note note) throws RessourceNotFoundException {
@@ -32,7 +33,8 @@ public class NoteService {
     public Note deleteNote(String id) throws RessourceNotFoundException {
 
         Note note = findById(id);
-        return noteRepository.insert(note);
+        noteRepository.delete(note);
+        return note;
     }
 
     public List<Note> findAllByPatientId(Integer id) {
@@ -41,7 +43,6 @@ public class NoteService {
     }
 
     public Note findById(String id) throws RessourceNotFoundException {
-
         Optional<Note> note = noteRepository.findById(id);
         return note.orElseThrow(() -> new RessourceNotFoundException("note not found"));
 

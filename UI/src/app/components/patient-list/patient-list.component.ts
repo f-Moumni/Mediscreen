@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Patient} from "../../model/patient.model";
 import {Router} from "@angular/router";
-import {PatientService} from "../../service/patient.service";
+import {PatientService} from "../../service/Patient.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {BehaviorSubject, map, take} from "rxjs";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-patient-list',
@@ -13,18 +14,16 @@ import {BehaviorSubject, map, take} from "rxjs";
 export class PatientListComponent implements OnInit {
   patients!: Patient [];
   searchTerm!: string;
-  isLoad = false;
+
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
   saveForm!: FormGroup;
   patient !: Patient;
-  firstName: Boolean | any;
+
+  @ViewChild('closebutton') closebutton!: any;
+  @ViewChild('cancelbutton') cancelbutton!: any;
 
   constructor(private router: Router, private patientService: PatientService, private formBuilder: FormBuilder) {
-  }
-
-  ngOnInit(): void {
-    this.getPatients();
     this.saveForm = this.formBuilder.group({
       firstName: [null, [
         Validators.required,
@@ -44,6 +43,11 @@ export class PatientListComponent implements OnInit {
     })
   }
 
+  ngOnInit(): void {
+    this.getPatients();
+
+  }
+
   getPatients() {
     this.patientService.getPatients().pipe(
       take(1),
@@ -51,6 +55,8 @@ export class PatientListComponent implements OnInit {
         this.patients = ps;
         this.dataSubject.next(ps)
         return ps
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
       })).subscribe()
   }
 
@@ -63,15 +69,10 @@ export class PatientListComponent implements OnInit {
         this.dataSubject.next([
           ...this.dataSubject.value, p]);
         this.patients = this.dataSubject.value;
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
       })).subscribe()
-  }
-
-  onLoadAddForm() {
-    this.saveForm.reset();
-  }
-
-  onLoaDeleteForm(patient: Patient) {
-    this.patient = patient;
+    this.closebutton.nativeElement.click();
   }
 
   doRemovePatient() {
@@ -81,7 +82,13 @@ export class PatientListComponent implements OnInit {
         this.dataSubject.next([
           ...this.dataSubject.value.filter((p => p.id !== this.patient.id))]);
         this.patients = this.dataSubject.value;
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
       })).subscribe()
+    this.cancelbutton.nativeElement.click();
   }
 
+  onLoaDeleteForm(patient: any) {
+    this.patient = patient
+  }
 }

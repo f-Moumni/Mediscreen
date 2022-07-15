@@ -1,0 +1,181 @@
+<div class="container">
+  <h3 class="h3 my-5 font-weight-normal text-center">Manage Notes</h3>
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-xs-4">
+            <input
+              #name [(ngModel)]="searchTerm" aria-label="Search" class="form-control w-25 p-3"
+              name="searchTerm" placeholder="Search" type="search"
+            >
+          </div>
+          <div class="col-xs-8">
+            <a
+              class="btn btn-success"
+              data-toggle="modal"
+              href="#addNoteModal"
+            ><i class="material-icons">&#xE147;</i> <span>Add New Note</span></a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Notes</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody *ngFor=" let note of notes | filter: searchTerm">
+        <tr>
+          <td>  {{note.date}}</td>
+          <td> {{note.note}}</td>
+          <td><a (click)="onLoadEditForm(note)" class="edit" data-toggle="modal" href="#editNoteModal"><i
+            class="material-icons"
+            data-toggle="tooltip"
+            title="edit"
+          >&#xe8f4;</i></a>
+            <a (click)="onLoadDeleteForm(note)" class="delete" data-toggle="modal" href="#deleteNoteModal"><i
+              class="material-icons"
+              data-toggle="tooltip"
+              title="Delete"
+            >&#xE872;</i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!-- Add Modal HTML -->
+<ng-container>
+  <div class="modal fade" id="addNoteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form (ngSubmit)="onSaveNote()" [formGroup]="saveForm">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Note</h4>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Date</label>
+              <input class="form-control" formControlName="date" required type="Date">
+              <div
+                *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
+              saveForm.controls['date'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['date'].errors?.['date']">
+                  date is required.
+                </div>
+                <div *ngIf="saveForm.controls['date'].errors?.['max']">
+                  date must be in the past
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Note</label>
+                <textarea class="form-control" formControlName="note"></textarea>
+                <div
+                  *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
+              saveForm.controls['note'].touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
+                    note must be at least 5 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input #addCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+            <input class="btn btn-success" type="submit" value="Add">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- Edit Modal HTML-->
+<ng-container *ngIf="isLoad==true">
+  <div class="modal fade" id="editNoteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form (ngSubmit)="onEditNote()" [formGroup]="editNoteForm">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Patient</h4>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>ID</label>
+              <input class="form-control" formControlName="id" readonly required type="text">
+            </div>
+            <label>Date</label>
+            <input class="form-control" formControlName="date" required type="Date">
+            <div
+              *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
+              saveForm.controls['date'].touched)"
+              class="alert alert-danger"
+            >
+              <div *ngIf="saveForm.controls['date'].errors?.['date']">
+                date is required.
+              </div>
+              <div *ngIf="saveForm.controls['date'].errors?.['max']">
+                date must be in the past
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Note</label>
+              <textarea class="form-control" formControlName="note"></textarea>
+              <div
+                *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
+              saveForm.controls['note'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
+                  note must be at least 5 characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input #editCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+            <input class="btn btn-info" type="submit" value="Save">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- Delete Modal HTML -->
+<ng-container>
+  <div class="modal fade" id="deleteNoteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Delete Note</h4>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete these Records?</p>
+            <p class="text-warning"><small>This action cannot be undone.</small></p>
+          </div>
+          <div class="modal-footer">
+            <input #cancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+            <input
+              (click)="doRemoveNote()" class="btn btn-danger" type="submit"
+              value="Delete"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>
+

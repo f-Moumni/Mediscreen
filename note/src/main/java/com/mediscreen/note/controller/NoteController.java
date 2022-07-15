@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@CrossOrigin(origins = "*")
 @RequestMapping("note")
 @RestController
 public class NoteController {
@@ -33,12 +33,14 @@ public class NoteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Note>> GetAllNote(@RequestParam Integer PatientId) {
-        return new ResponseEntity<>(noteService.findAllByPatientId(PatientId), HttpStatus.OK);
+    public ResponseEntity<List<Note>> GetAllNote(@RequestParam Integer patientId) {
+
+        return new ResponseEntity<>(noteService.findAllByPatientId(patientId), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<Note> deleteNote(@RequestParam String noteId) throws RessourceNotFoundException {
-        return new ResponseEntity<>(noteService.deleteNote(noteId), HttpStatus.OK);
+    public ResponseEntity<Note> deleteNote(@RequestParam String id) throws RessourceNotFoundException {
+
+        return new ResponseEntity<>(noteService.deleteNote(id), HttpStatus.OK);
     }
 }

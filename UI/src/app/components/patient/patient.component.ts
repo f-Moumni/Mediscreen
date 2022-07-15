@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Patient} from "../../model/patient.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {PatientService} from "../../service/patient.service";
+import {PatientService} from "../../service/Patient.service";
 import {map, take, tap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 

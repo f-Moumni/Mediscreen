@@ -9,7 +9,8 @@ export const environment = {
   httpOptions : {
     headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
   },
-  AUTH_API : 'http://localhost:8081'
+  Patient_API : 'http://localhost:8081',
+  Note_API:'http://localhost:8082',
 };
 
 /*

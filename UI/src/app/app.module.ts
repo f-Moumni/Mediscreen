@@ -9,13 +9,15 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { PatientComponent } from './components/patient/patient.component';
 import { HeaderComponent } from './components/header/header.component';
+import { NotesComponent } from './components/notes/notes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PatientListComponent,
     PatientComponent,
-    HeaderComponent
+    HeaderComponent,
+    NotesComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@
           </div>
           <div class="col-xs-8">
             <a
-              (click)="onLoadAddForm()"
+
               class="btn btn-success"
               data-toggle="modal"
               href="#addPatientModal"
@@ -24,8 +24,8 @@
       <table class="table table-striped table-hover">
         <thead>
         <tr>
-          <th scope="col">First_Name</th>
-          <th scope="col">Last_Name</th>
+          <th scope="col">FirstName</th>
+          <th scope="col">LastName</th>
           <th scope="col">Birthdate</th>
           <th scope="col">Gender</th>
           <th scope="col">Address</th>
@@ -55,194 +55,144 @@
         </tr>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
 <!-- Add Modal HTML -->
-<div class="modal fade" id="addPatientModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form (ngSubmit)="onSavePatient()" [formGroup]="saveForm">
-        <div class="modal-header">
-          <h4 class="modal-title">Add Patient</h4>
-          <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>First Name</label>
-            <input class="form-control" formControlName="firstName" required type="text">
-            <div
-              *ngIf="saveForm.controls['firstName'].invalid && (saveForm.controls['firstName'].dirty || saveForm.controls['firstName'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['firstName'].errors?.['required']">
-                firstName is required.
+<ng-container >
+  <div class="modal fade" id="addPatientModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form (ngSubmit)="onSavePatient()" [formGroup]="saveForm">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Patient</h4>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label>First Name</label>
+              <input class="form-control" formControlName="firstName" required type="text">
+              <div
+                *ngIf="saveForm.controls['firstName'].invalid && (saveForm.controls['firstName'].dirty || saveForm.controls['firstName'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['firstName'].errors?.['required']">
+                  firstName is required.
+                </div>
+                <div *ngIf="saveForm.controls['firstName'].errors?.['maxlength']">
+                  firstName must be less than 50 characters long.
+                </div>
               </div>
-              <div *ngIf="saveForm.controls['firstName'].errors?.['maxlength']">
-                firstName must be less than 50 characters long.
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input class="form-control" formControlName="lastName" required type="text">
+              <div
+                *ngIf="saveForm.controls['lastName'].invalid && (saveForm.controls['lastName'].dirty || saveForm.controls['lastName'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['lastName'].errors?.['required']">
+                  lastName is required.
+                </div>
+                <div *ngIf="saveForm.controls['lastName'].errors?.['maxlength']">
+                  lastName must be less than 50 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Birthdate</label>
+              <input class="form-control" formControlName="birthdate" required type="Date">
+              <div
+                *ngIf="saveForm.controls['birthdate'].invalid && (saveForm.controls['birthdate'].dirty || saveForm.controls['birthdate'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['birthdate'].errors?.['required']">
+                  birthdate is required.
+                </div>
+                <div *ngIf="saveForm.controls['birthdate'].errors?.['max']">
+                  birthday must be in the past
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Gender</label>
+              <select
+                class="form-control"
+                formControlName="gender" required
+              >
+                <option value="FEMININE">FEMININE</option>
+                <option value="MASCULINE">MASCULINE</option>
+              </select>
+              <div
+                *ngIf="saveForm.controls['gender'].invalid && (saveForm.controls['gender'].dirty || saveForm.controls['gender'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['gender'].errors?.['required']">
+                  gender is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <textarea class="form-control" formControlName="address"></textarea>
+              <div
+                *ngIf="saveForm.controls['address'].invalid && (saveForm.controls['address'].dirty || saveForm.controls['address'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['address'].errors?.['minlength']">
+                  address must be at least 5 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input class="form-control" formControlName="phone" type="text">
+              <div
+                *ngIf="saveForm.controls['phone'].invalid && (saveForm.controls['phone'].dirty || saveForm.controls['phone'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['phone'].errors?.['minlength']">
+                  phone must be at least 10 characters long.
+                </div>
+                <div *ngIf="saveForm.controls['phone'].errors?.['maxlength']">
+                  phone must be less than 20 characters long.
+                </div>
               </div>
             </div>
           </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input class="form-control" formControlName="lastName" required type="text">
-            <div
-              *ngIf="saveForm.controls['lastName'].invalid && (saveForm.controls['lastName'].dirty || saveForm.controls['lastName'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['lastName'].errors?.['required']">
-                lastName is required.
-              </div>
-              <div *ngIf="saveForm.controls['lastName'].errors?.['maxlength']">
-                lastName must be less than 50 characters long.
-              </div>
-            </div>
+          <div class="modal-footer">
+            <input #closebutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+            <input class="btn btn-success" type="submit" value="Add">
           </div>
-          <div class="form-group">
-            <label>Birthdate</label>
-            <input class="form-control" formControlName="birthdate" required type="Date">
-            <div
-              *ngIf="saveForm.controls['birthdate'].invalid && (saveForm.controls['birthdate'].dirty || saveForm.controls['birthdate'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['birthdate'].errors?.['required']">
-                birthdate is required.
-              </div>
-              <div *ngIf="saveForm.controls['birthdate'].errors?.['max']">
-                birthday must be in the past
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Gender</label>
-            <select
-              class="form-control"
-              formControlName="gender" required
-            >
-              <option value="FEMININE">FEMININE</option>
-              <option value="MASCULINE">MASCULINE</option>
-            </select>
-            <div
-              *ngIf="saveForm.controls['gender'].invalid && (saveForm.controls['gender'].dirty || saveForm.controls['gender'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['gender'].errors?.['required']">
-                gender is required.
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" formControlName="address"></textarea>
-            <div
-              *ngIf="saveForm.controls['address'].invalid && (saveForm.controls['address'].dirty || saveForm.controls['address'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['address'].errors?.['minlength']">
-                address must be at least 5 characters long.
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input class="form-control" formControlName="phone" type="text">
-            <div
-              *ngIf="saveForm.controls['phone'].invalid && (saveForm.controls['phone'].dirty || saveForm.controls['phone'].touched)"
-              class="alert alert-danger"
-            >
-              <div *ngIf="saveForm.controls['phone'].errors?.['minlength']">
-                phone must be at least 10 characters long.
-              </div>
-              <div *ngIf="saveForm.controls['phone'].errors?.['maxlength']">
-                phone must be less than 20 characters long.
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-          <input class="btn btn-success" type="submit" value="Add">
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
-</div>
-<!-- Edit Modal HTML
-<div class="modal fade" id="editPatientModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form (ngSubmit)="onEditPatient()" *ngIf="isLoad" [formGroup]="editForm">
-        <div class="modal-header">
-          <h4 class="modal-title">Edit Patient</h4>
-          <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>ID</label>
-            <input class="form-control" formControlName="id" readonly required type="text">
-          </div>
-          <div class="form-group">
-            <label>First Name</label>
-            <input class="form-control" formControlName="firstName" required type="text">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input class="form-control" formControlName="lastName" required type="text">
-          </div>
-          <div class="form-group">
-            <label>Birthdate</label>
-            <input class="form-control" formControlName="birthdate" required type="Date">
-          </div>
-          <div class="form-group">
-            <label>Gender</label>
-            <select
-              class="form-control"
-              formControlName="gender" required
-            >
-              <option value="FEMININE">FEMININE</option>
-              <option value="MASCULINE">MASCULINE</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Address</label>
-            <textarea class="form-control" formControlName="address"></textarea>
-          </div>
-          <div class="form-group">
-            <label>Phone</label>
-            <input class="form-control" formControlName="phone" type="text">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-          <input class="btn btn-info" type="submit" value="Save">
-        </div>
-      </form>
-    </div>
-  </div>
-</div>-->
-<!-- Delete Modal HTML -->
-<div class="modal fade" id="deletePatientModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form>
-        <div class="modal-header">
-          <h4 class="modal-title">Delete Patient</h4>
-          <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>Are you sure you want to delete these Records?</p>
-          <p class="text-warning"><small>This action cannot be undone.</small></p>
-        </div>
-        <div class="modal-footer">
-          <input class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-          <input
-            (click)="doRemovePatient()" class="btn btn-danger" type="submit"
-            value="Delete"
-          >
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
+</ng-container>
+<ng-container>
+  <!-- Delete Modal HTML -->
 
+  <div class="modal fade" id="deletePatientModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form>
+          <div class="modal-header">
+            <h4 class="modal-title">Delete Patient</h4>
+            <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Are you sure you want to delete these Records?</p>
+            <p class="text-warning"><small>This action cannot be undone.</small></p>
+          </div>
+          <div class="modal-footer">
+            <input #cancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+            <input
+              (click)="doRemovePatient()" class="btn btn-danger" type="submit"
+              value="Delete"
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-container>

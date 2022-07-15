@@ -4,7 +4,7 @@ import {Observable} from "rxjs";
 import {environment} from "../../environments/environment";
 import {Patient} from "../model/patient.model";
 
-const API = environment.AUTH_API;
+const API = environment.Patient_API;
 const httpOptions = environment.httpOptions
 
 @Injectable({
