@@ -11,6 +11,7 @@ import {PatientComponent} from './components/patient/patient.component';
 import {HeaderComponent} from './components/header/header.component';
 import {NotesComponent} from './components/notes/notes.component';
 import {NgxPaginationModule} from "ngx-pagination";
+import { PageNotFoundComponent } from './components/pagenotfound/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {NgxPaginationModule} from "ngx-pagination";
     PatientListComponent,
     PatientComponent,
     HeaderComponent,
-    NotesComponent
+    NotesComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Patient} from "../../model/patient.model";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PatientService} from "../../service/Patient.service";
-import {map, take, tap} from "rxjs";
+import {take, tap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
@@ -16,6 +16,7 @@ export class PatientComponent implements OnInit {
   editForm!: FormGroup;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private patientService: PatientService,
               private formBuilder: FormBuilder) {
     this.editForm = this.formBuilder.group({
@@ -59,17 +60,17 @@ export class PatientComponent implements OnInit {
             phone: this.patient.phone
           })
       }, (error: HttpErrorResponse) => {
-        console.log(error); // if api returns and error you will get it here
+        this.router.navigate(['404'])
       })).subscribe()
   }
 
   onEditPatient() {
     this.patientService.updatePatient(this.editForm.value).pipe(
       take(1),
-      map(p => {
+      tap(p => {
           this.patient = p;
         }, (error: HttpErrorResponse) => {
-          console.log(error);
+          console.log(error.message)
         }
       )).subscribe()
   }

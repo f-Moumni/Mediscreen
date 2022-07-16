@@ -1,0 +1,96 @@
+body {
+  background-color: #2F3242;
+}
+
+svg {
+  left:        50%;
+  margin-left: -400px;
+  margin-top:  -250px;
+  position:    absolute;
+  top:         50%;
+}
+
+.message-box {
+  color:       #2F3242;
+  font-family: Roboto;
+  font-weight: 300;
+  height:      200px;
+  left:        50%;
+  margin-left: 50px;
+  margin-top:  -100px;
+  position:    absolute;
+  top:         50%;
+  width:       380px;
+}
+
+.message-box h1 {
+  font-size:     60px;
+  line-height:   46px;
+  margin-bottom: 40px;
+}
+
+.buttons-con .action-link-wrap {
+  margin-top: 40px;
+}
+
+.buttons-con .action-link-wrap a {
+  background:      #68C950;
+  border-radius:   4px;
+  color:           #FFFFFF;
+  cursor:          pointer;
+  font-size:       14px;
+  font-weight:     bold;
+  margin-right:    10px;
+  padding:         8px 25px;
+  text-decoration: none;
+  transition:      all 0.3s linear;
+}
+
+.buttons-con .action-link-wrap a:hover {
+  background: #5A5C6C;
+  color:      #FFFFFF;
+}
+
+#Polygon-1, #Polygon-2, #Polygon-3, #Polygon-4, #Polygon-4, #Polygon-5 {
+  animation: float 1s infinite ease-in-out alternate;
+}
+
+#Polygon-2 {
+  animation-delay: .2s;
+}
+
+#Polygon-3 {
+  animation-delay: .4s;
+}
+
+#Polygon-4 {
+  animation-delay: .6s;
+}
+
+#Polygon-5 {
+  animation-delay: .8s;
+}
+
+@keyframes float {
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@media (max-width: 450px) {
+  svg {
+    left:        50%;
+    margin-left: -190px;
+    margin-top:  -250px;
+    position:    absolute;
+    top:         50%;
+  }
+
+  .message-box {
+    left:        50%;
+    margin-left: -190px;
+    margin-top:  -100px;
+    text-align:  center;
+    top:         50%;
+  }
+}
