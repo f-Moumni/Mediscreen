@@ -17,12 +17,17 @@ public class Note {
     private Integer patientId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
 
     private String note;
 
     public Note() {
 
+    }
+
+    public Note(Integer patientId, String note) {
+        this.patientId = patientId;
+        this.note      = note;
     }
 
     public Note(Integer patientId, LocalDate date, String note) {
