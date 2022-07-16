@@ -27,15 +27,23 @@
           <th scope="col">Action</th>
         </tr>
         </thead>
-        <tbody *ngFor=" let note of notes | filter: searchTerm">
+        <tbody
+          *ngFor=" let note of (notes | filter: searchTerm )| paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index"
+        >
         <tr>
           <td>  {{note.date}}</td>
           <td> {{note.note}}</td>
           <td><a (click)="onLoadEditForm(note)" class="edit" data-toggle="modal" href="#editNoteModal"><i
             class="material-icons"
             data-toggle="tooltip"
-            title="edit"
-          >&#xe8f4;</i></a>
+            title="Edit"
+          >&#xE254;</i></a>
             <a (click)="onLoadDeleteForm(note)" class="delete" data-toggle="modal" href="#deleteNoteModal"><i
               class="material-icons"
               data-toggle="tooltip"
@@ -45,9 +53,19 @@
         </tr>
         </tbody>
       </table>
+      <div class="clearfix">
+        <ul class="pagination">
+          <pagination-controls
+            (pageChange)="onTableDataChange($event)"
+            nextLabel="Next"
+            previousLabel="Prev"
+          ></pagination-controls>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
+
 <!-- Add Modal HTML -->
 <ng-container>
   <div class="modal fade" id="addNoteModal">
@@ -61,13 +79,13 @@
           <div class="modal-body">
             <div class="form-group">
               <label>Date</label>
-              <input class="form-control" formControlName="date" required type="Date">
+              <input class="form-control" formControlName="date" required type="date">
               <div
                 *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
               saveForm.controls['date'].touched)"
                 class="alert alert-danger"
               >
-                <div *ngIf="saveForm.controls['date'].errors?.['date']">
+                <div *ngIf="saveForm.controls['date'].errors?.['required']">
                   date is required.
                 </div>
                 <div *ngIf="saveForm.controls['date'].errors?.['max']">
@@ -83,6 +101,9 @@
               saveForm.controls['note'].touched)"
                   class="alert alert-danger"
                 >
+                  <div *ngIf="saveForm.controls['note'].errors?.['required']">
+                    note is required.
+                  </div>
                   <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
                     note must be at least 5 characters long.
                   </div>
@@ -115,13 +136,13 @@
               <input class="form-control" formControlName="id" readonly required type="text">
             </div>
             <label>Date</label>
-            <input class="form-control" formControlName="date" required type="Date">
+            <input class="form-control" formControlName="date" required type="date">
             <div
               *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
               saveForm.controls['date'].touched)"
               class="alert alert-danger"
             >
-              <div *ngIf="saveForm.controls['date'].errors?.['date']">
+              <div *ngIf="saveForm.controls['date'].errors?.['require']">
                 date is required.
               </div>
               <div *ngIf="saveForm.controls['date'].errors?.['max']">
@@ -137,6 +158,9 @@
               saveForm.controls['note'].touched)"
                 class="alert alert-danger"
               >
+                <div *ngIf="saveForm.controls['note'].errors?.['required']">
+                  note is required.
+                </div>
                 <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
                   note must be at least 5 characters long.
                 </div>
@@ -145,7 +169,7 @@
           </div>
           <div class="modal-footer">
             <input #editCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-            <input class="btn btn-info" type="submit" value="Save">
+            <input class="btn btn-success" type="submit" value="Save">
           </div>
         </form>
       </div>

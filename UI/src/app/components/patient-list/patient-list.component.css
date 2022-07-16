@@ -68,7 +68,8 @@ table.table tr th:first-child {
 }
 
 table.table tr th:last-child {
-  width: 120px;
+  padding: 12px 25px;
+  width:   120px;
 }
 
 table.table-striped tbody tr:nth-of-type(odd) {

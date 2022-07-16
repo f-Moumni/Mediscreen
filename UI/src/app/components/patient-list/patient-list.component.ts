@@ -3,8 +3,9 @@ import {Patient} from "../../model/patient.model";
 import {Router} from "@angular/router";
 import {PatientService} from "../../service/Patient.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {BehaviorSubject, map, take} from "rxjs";
+import {BehaviorSubject, take, tap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Gender} from "../../enum/Gender.enum";
 
 @Component({
   selector: 'app-patient-list',
@@ -14,11 +15,13 @@ import {HttpErrorResponse} from "@angular/common/http";
 export class PatientListComponent implements OnInit {
   patients!: Patient [];
   searchTerm!: string;
-
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
   saveForm!: FormGroup;
   patient !: Patient;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 5;
 
   @ViewChild('closebutton') closebutton!: any;
   @ViewChild('cancelbutton') cancelbutton!: any;
@@ -33,7 +36,7 @@ export class PatientListComponent implements OnInit {
         Validators.maxLength(24)]],
       birthdate: [null, [
         Validators.required]],
-      gender: [null,
+      gender: [Gender.MASCULINE,
         Validators.required
       ],
       address: [null, Validators.minLength(5)],
@@ -51,10 +54,10 @@ export class PatientListComponent implements OnInit {
   getPatients() {
     this.patientService.getPatients().pipe(
       take(1),
-      map(ps => {
+      tap(ps => {
         this.patients = ps;
-        this.dataSubject.next(ps)
-        return ps
+        this.dataSubject.next(ps);
+        this.count = this.patients.length;
       }, (error: HttpErrorResponse) => {
         console.log(error);
       })).subscribe()
@@ -65,23 +68,26 @@ export class PatientListComponent implements OnInit {
     let patient = this.saveForm.value
     this.patientService.savePatient(patient).pipe(
       take(1),
-      map(p => {
+      tap(p => {
         this.dataSubject.next([
           ...this.dataSubject.value, p]);
         this.patients = this.dataSubject.value;
+        this.count = this.patients.length;
       }, (error: HttpErrorResponse) => {
         console.log(error);
       })).subscribe()
+    this.saveForm.reset();
     this.closebutton.nativeElement.click();
   }
 
   doRemovePatient() {
     this.patientService.removePatient(this.patient).pipe(
       take(1),
-      map(p => {
+      tap(p => {
         this.dataSubject.next([
           ...this.dataSubject.value.filter((p => p.id !== this.patient.id))]);
         this.patients = this.dataSubject.value;
+        this.count = this.patients.length;
       }, (error: HttpErrorResponse) => {
         console.log(error);
       })).subscribe()
@@ -91,4 +97,9 @@ export class PatientListComponent implements OnInit {
   onLoaDeleteForm(patient: any) {
     this.patient = patient
   }
+
+  onTableDataChange(event: any) {
+    this.page = event;
+  }
+
 }

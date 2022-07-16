@@ -12,7 +12,6 @@
           </div>
           <div class="col-xs-8">
             <a
-
               class="btn btn-success"
               data-toggle="modal"
               href="#addPatientModal"
@@ -33,7 +32,15 @@
           <th scope="col">Action</th>
         </tr>
         </thead>
-        <tbody *ngFor=" let patient of patients | filter: searchTerm">
+        <tbody
+          *ngFor=" let patient of patients | filter: searchTerm| paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index"
+        >
         <tr>
           <td>  {{patient.firstName}}</td>
           <td> {{patient.lastName}}</td>
@@ -55,11 +62,20 @@
         </tr>
         </tbody>
       </table>
+      <div class="clearfix">
+        <ul class="pagination">
+          <pagination-controls
+            (pageChange)="onTableDataChange($event)"
+            nextLabel="Next"
+            previousLabel="Prev"
+          ></pagination-controls>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 <!-- Add Modal HTML -->
-<ng-container >
+<ng-container>
   <div class="modal fade" id="addPatientModal">
     <div class="modal-dialog">
       <div class="modal-content">

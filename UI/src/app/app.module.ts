@@ -7,9 +7,10 @@ import {PatientListComponent} from './components/patient-list/patient-list.compo
 import {HttpClientModule} from "@angular/common/http";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { PatientComponent } from './components/patient/patient.component';
-import { HeaderComponent } from './components/header/header.component';
-import { NotesComponent } from './components/notes/notes.component';
+import {PatientComponent} from './components/patient/patient.component';
+import {HeaderComponent} from './components/header/header.component';
+import {NotesComponent} from './components/notes/notes.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NotesComponent } from './components/notes/notes.component';
     AppRoutingModule,
     Ng2SearchPipeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
