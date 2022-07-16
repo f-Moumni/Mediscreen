@@ -2,26 +2,26 @@ package com.mediscreen.note.dto;
 
 public class NoteDto {
 
-    private String      PatId;
-    private String    e;
+    private String patId;
+    private String e;
 
     public NoteDto() {
 
     }
 
     public NoteDto(String patId, String e) {
-        PatId  = patId;
-        this.e = e;
+        this.patId = patId;
+        this.e     = e;
     }
 
     public String getPatId() {
 
-        return PatId;
+        return patId;
     }
 
     public void setPatId(String patId) {
 
-        PatId = patId;
+        this.patId = patId;
     }
 
     public String getE() {

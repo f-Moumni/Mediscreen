@@ -28,19 +28,15 @@ public class NoteCurlController {
     }
 
     @PostMapping(value = "add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteDto> SaveNote(NoteDto newNote) {
+    public ResponseEntity<NoteDto> saveNote(NoteDto newNote) {
 
         return new ResponseEntity<>(noteMapper.toNoteDto(noteService.saveNote(noteMapper.toNote(newNote))), HttpStatus.CREATED);
     }
 
-    @PutMapping(value = "update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteDto> updateNote(NoteDto newNote) throws RessourceNotFoundException {
 
-        return new ResponseEntity<>(noteMapper.toNoteDto(noteService.updateNote(noteMapper.toNote(newNote))), HttpStatus.OK);
-    }
 
     @GetMapping(value = "getAll", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<NoteDto>> GetAllNote(String patientId) {
+    public ResponseEntity<List<NoteDto>> getAllNote(String patientId) {
 
         return new ResponseEntity<>(noteService.findAllByPatientId(Integer.parseInt(patientId))
                                                .stream()

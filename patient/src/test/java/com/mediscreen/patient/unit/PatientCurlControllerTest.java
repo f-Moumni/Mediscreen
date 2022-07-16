@@ -1,7 +1,6 @@
 package com.mediscreen.patient.unit;
 
 import com.mediscreen.patient.constant.Gender;
-import com.mediscreen.patient.controller.PatientController;
 import com.mediscreen.patient.controller.PatientCurlController;
 import com.mediscreen.patient.dto.PatientDto;
 import com.mediscreen.patient.model.Patient;
@@ -25,7 +24,6 @@ import static java.time.LocalDate.now;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,8 +39,9 @@ public class PatientCurlControllerTest {
     @MockBean
     private PatientMapper  patientMapper;
 
-    private Patient        patient = new Patient(1, "john", "doe", now(), Gender.MASCULINE,  "33 rue des nations","0890009");
-    private PatientDto patientDto = new PatientDto(1,"doe","john", LocalDate.now().toString(),"M","0890009","33 rue des nations");
+    private Patient    patient    = new Patient(1, "john", "doe", now(), Gender.MASCULINE, "33 rue des nations", "0890009");
+    private PatientDto patientDto = new PatientDto(1, "doe", "john", LocalDate.now()
+                                                                              .toString(), "M", "0890009", "33 rue des nations");
 
     @BeforeEach
     void setUp() {
@@ -74,10 +73,11 @@ public class PatientCurlControllerTest {
         //Act
         mvc.perform(put("/patient/update")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(patientDto)))
+                   .content(JsonTestMapper.asJsonString(patientDto)))
            .andDo(print())
            .andExpect(status().isOk());
     }
+
     @Test
     void addPatientTest_shouldReturnPatientAdded() throws Exception {
         //Arrange
@@ -85,11 +85,12 @@ public class PatientCurlControllerTest {
         //Act
         mvc.perform(post("/patient/add")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(patient)))
+                   .content(JsonTestMapper.asJsonString(patient)))
            .andDo(print())
            .andExpect(status().isCreated());
 
     }
+
     @Test
     void removePatientTest_shouldReturnPatientAdded() throws Exception {
         //Arrange
@@ -97,7 +98,7 @@ public class PatientCurlControllerTest {
         //Act
         mvc.perform(delete("/patient/remove")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .accept(MediaType.APPLICATION_JSON).param("id","1"))
+                   .accept(MediaType.APPLICATION_JSON).param("id", "1"))
            .andDo(print())
            .andExpect(status().isOk());
 

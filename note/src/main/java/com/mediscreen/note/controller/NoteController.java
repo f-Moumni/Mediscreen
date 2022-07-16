@@ -23,7 +23,7 @@ public class NoteController {
 
 
     @PostMapping
-    public ResponseEntity<Note> SaveNote(@RequestBody Note newNote) {
+    public ResponseEntity<Note> saveNote(@RequestBody Note newNote) {
 
         return new ResponseEntity<>(noteService.saveNote(newNote), HttpStatus.CREATED);
     }
@@ -35,7 +35,7 @@ public class NoteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Note>> GetAllNote(@RequestParam Integer patientId) {
+    public ResponseEntity<List<Note>> getAllNote(@RequestParam Integer patientId) {
 
         return new ResponseEntity<>(noteService.findAllByPatientId(patientId), HttpStatus.OK);
     }

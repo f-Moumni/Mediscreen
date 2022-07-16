@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class NoteService {
@@ -43,8 +42,8 @@ public class NoteService {
     }
 
     public Note findById(String id) throws RessourceNotFoundException {
-        Optional<Note> note = noteRepository.findById(id);
-        return note.orElseThrow(() -> new RessourceNotFoundException("note not found"));
+
+        return noteRepository.findById(id).orElseThrow(() -> new RessourceNotFoundException("note not found"));
 
     }
 }
