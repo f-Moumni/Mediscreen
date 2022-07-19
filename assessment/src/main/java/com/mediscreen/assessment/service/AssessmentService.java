@@ -36,13 +36,13 @@ public class AssessmentService {
     }
 
 
-    public RiskLevel riskAssess(Long patientId) {
+    public RiskLevel riskAssess(PatientDto patient) {
 
 
-        PatientDto patient                  = patientProxy.getPatient(patientId);
+
         boolean    isOlderThenThirty        = calculator.isOlderThenThirty(patient.getBirthdate());
         Gender     gender                   = patient.getGender();
-        int        terminologyTriggersCount = calculateTerminologyTriggers(Math.toIntExact(patientId));
+        int        terminologyTriggersCount = calculateTerminologyTriggers(Math.toIntExact(patient.getId()));
 
         if (terminologyTriggersCount >= 8) {
             return RiskLevel.EARLY_ONSET;
@@ -78,9 +78,15 @@ public class AssessmentService {
         return calculator.calculateTriggersNumber(notes);
     }
 
-    public ReportDto generateReport(long patientId) {
-        PatientDto patient   = patientProxy.getPatient(patientId);
-        RiskLevel  riskLevel = riskAssess(patientId);
+    public ReportDto generateReportById(long patientId) {
+        PatientDto patient   = patientProxy.getPatientById(patientId);
+        RiskLevel  riskLevel = riskAssess(patient);
+        int age=calculator.calculateAge(patient.getBirthdate());
+        return reportMapper.toReportDto(patient,riskLevel,age);
+    }
+    public ReportDto generateReportByFamilyName(String familyName) {
+        PatientDto patient   = patientProxy.getPatientByFamilyName(familyName);
+        RiskLevel  riskLevel = riskAssess(patient);
         int age=calculator.calculateAge(patient.getBirthdate());
         return reportMapper.toReportDto(patient,riskLevel,age);
     }

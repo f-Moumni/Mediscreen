@@ -42,11 +42,11 @@ public class AssessmentServiceTest {
         //Arrange
         PatientDto patient = new PatientDto(1, "john", "doe", now(), gender, "0890009", "rue des nations");
         when(noteProxy.getAllNotes(any())).thenReturn(List.of(note, note2));
-        when(patientProxy.getPatient(any())).thenReturn(patient);
+
         when(calculator.isOlderThenThirty(any())).thenReturn(older);
         when(calculator.calculateTriggersNumber(any())).thenReturn(count);
         //Act
-        RiskLevel level = assessmentService.riskAssess(patient.getId());
+        RiskLevel level = assessmentService.riskAssess(patient);
         //Assert
         assertThat(level).isEqualTo(RiskLevel.EARLY_ONSET);
     }
@@ -56,11 +56,11 @@ public class AssessmentServiceTest {
         //Arrange
         PatientDto patient = new PatientDto(1, "john", "doe", now(), gender, "0890009", "rue des nations");
         when(noteProxy.getAllNotes(any())).thenReturn(List.of(note, note2));
-        when(patientProxy.getPatient(any())).thenReturn(patient);
+
         when(calculator.isOlderThenThirty(any())).thenReturn(older);
         when(calculator.calculateTriggersNumber(any())).thenReturn(count);
         //Act
-        RiskLevel level = assessmentService.riskAssess(patient.getId());
+        RiskLevel level = assessmentService.riskAssess(patient);
         //Assert
         assertThat(level).isEqualTo(RiskLevel.IN_DANGER);
     }
@@ -71,11 +71,10 @@ public class AssessmentServiceTest {
         //Arrange
         PatientDto patient = new PatientDto(1, "john", "doe", now(), gender, "0890009", "rue des nations");
         when(noteProxy.getAllNotes(any())).thenReturn(List.of(note, note2));
-        when(patientProxy.getPatient(any())).thenReturn(patient);
         when(calculator.isOlderThenThirty(any())).thenReturn(older);
         when(calculator.calculateTriggersNumber(any())).thenReturn(count);
         //Act
-        RiskLevel level = assessmentService.riskAssess(patient.getId());
+        RiskLevel level = assessmentService.riskAssess(patient);
         //Assert
         assertThat(level).isEqualTo(RiskLevel.BORDERLINE);
     }
@@ -86,11 +85,11 @@ public class AssessmentServiceTest {
         //Arrange
         PatientDto patient = new PatientDto(1, "john", "doe", now(), gender, "0890009", "rue des nations");
         when(noteProxy.getAllNotes(any())).thenReturn(List.of(note, note2));
-        when(patientProxy.getPatient(any())).thenReturn(patient);
+
         when(calculator.isOlderThenThirty(any())).thenReturn(older);
         when(calculator.calculateTriggersNumber(any())).thenReturn(count);
         //Act
-        RiskLevel level = assessmentService.riskAssess(patient.getId());
+        RiskLevel level = assessmentService.riskAssess(patient);
         //Assert
         assertThat(level).isEqualTo(RiskLevel.NONE);
     }

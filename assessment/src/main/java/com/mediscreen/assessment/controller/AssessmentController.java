@@ -18,16 +18,23 @@ public class AssessmentController {
     @Autowired
     public AssessmentController(AssessmentService assessmentService) {this.assessmentService = assessmentService;}
 
-    @GetMapping("report")
+    @GetMapping()
     public ResponseEntity<ReportDto> getReport(@RequestParam long patientId) {
 
-        return new ResponseEntity<>(assessmentService.generateReport(patientId), HttpStatus.OK);
+        return new ResponseEntity<>(assessmentService.generateReportById(patientId), HttpStatus.OK);
     }
 
-    @PostMapping (consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getCurlReport( int patId) {
+    @PostMapping (value = "id", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCurlReportById( int patId) {
 
-        ReportDto reportDto = assessmentService.generateReport(patId);
+        ReportDto reportDto = assessmentService.generateReportById(patId);
+        String    report    = "Patient : " + reportDto.getPatient() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
+        return new ResponseEntity<>(report, HttpStatus.OK);
+    }
+    @PostMapping (value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCurlReportByFamilyName( String familyName) {
+
+        ReportDto reportDto = assessmentService.generateReportByFamilyName(familyName);
         String    report    = "Patient : " + reportDto.getPatient() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }

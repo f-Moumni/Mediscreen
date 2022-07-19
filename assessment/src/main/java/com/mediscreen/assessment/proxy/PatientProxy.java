@@ -11,5 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface PatientProxy {
 
     @GetMapping("patient")
-    public PatientDto getPatient(@RequestParam Long id);
+    public PatientDto getPatientById(@RequestParam Long id);
+
+    @GetMapping("patient/lastname")
+    public PatientDto getPatientByFamilyName(@RequestParam String lastname);
 }
+

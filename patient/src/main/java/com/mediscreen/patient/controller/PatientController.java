@@ -30,10 +30,17 @@ public class PatientController {
 
         return new ResponseEntity<>(patientService.getAllPatients(), OK);
     }
+
     @GetMapping
-    public ResponseEntity<Patient> getPatient(@RequestParam Long id) throws RessourceNotFoundException {
+    public ResponseEntity<Patient> getPatientById(@RequestParam Long id) throws RessourceNotFoundException {
 
         return new ResponseEntity<>(patientService.findById(id), OK);
+    }
+
+    @GetMapping("lastname")
+    public ResponseEntity<Patient> getPatientByLastName(@RequestParam String lastname) throws RessourceNotFoundException {
+
+        return new ResponseEntity<>(patientService.findByLatName(lastname), OK);
     }
 
     @PutMapping
@@ -42,8 +49,9 @@ public class PatientController {
         return new ResponseEntity<>(patientService.updatePatient(patient), OK);
     }
 
+
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@RequestBody @Valid Patient patient)  {
+    public ResponseEntity<Patient> addPatient(@RequestBody @Valid Patient patient) {
 
         return new ResponseEntity<>(patientService.savePatient(patient), CREATED);
     }
