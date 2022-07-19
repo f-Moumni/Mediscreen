@@ -8,6 +8,7 @@ import com.mediscreen.assessment.enums.RiskLevel;
 import com.mediscreen.assessment.proxy.NoteProxy;
 import com.mediscreen.assessment.proxy.PatientProxy;
 import com.mediscreen.assessment.util.Calculator;
+import com.mediscreen.assessment.util.ReportMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +24,15 @@ public class AssessmentService {
     private final PatientProxy patientProxy;
 
     private final Calculator calculator;
+    private final ReportMapper reportMapper;
 
     @Autowired
-    public AssessmentService(NoteProxy noteProxy, PatientProxy patientProxy, Calculator ageCalculator) {
+    public AssessmentService(NoteProxy noteProxy, PatientProxy patientProxy, Calculator ageCalculator, ReportMapper reportMapper) {
 
         this.noteProxy    = noteProxy;
         this.patientProxy = patientProxy;
         this.calculator   = ageCalculator;
+        this.reportMapper = reportMapper;
     }
 
 
@@ -75,11 +78,11 @@ public class AssessmentService {
         return calculator.calculateTriggersNumber(notes);
     }
 
-    public ReportDto GenerateReport(long patientId) {
+    public ReportDto generateReport(long patientId) {
         PatientDto patient   = patientProxy.getPatient(patientId);
         RiskLevel  riskLevel = riskAssess(patientId);
-        return new ReportDto(patient.getFirstName(), patient.getLastName(), patient.getBirthdate(),
-                patient.getGender(), patient.getAddress(), patient.getPhone(), riskLevel);
+        int age=calculator.calculateAge(patient.getBirthdate());
+        return reportMapper.toReportDto(patient,riskLevel,age);
     }
 }
 
