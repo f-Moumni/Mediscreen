@@ -15,6 +15,6 @@ export class PageNotFoundComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['patients'])
+    this.router.navigate(['home'])
   }
 }

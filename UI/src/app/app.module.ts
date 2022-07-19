@@ -12,6 +12,7 @@ import {HeaderComponent} from './components/header/header.component';
 import {NotesComponent} from './components/notes/notes.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { PageNotFoundComponent } from './components/pagenotfound/page-not-found.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PageNotFoundComponent } from './components/pagenotfound/page-not-found.
     PatientComponent,
     HeaderComponent,
     NotesComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

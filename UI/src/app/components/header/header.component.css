@@ -1,7 +1,35 @@
-header {
-  background-color: #FFFFFF;
-  margin-bottom:    20px;
-  padding:          10px;
-  text-align:       center;
+.navbar-brand {
+  margin-left: 30px;
+  padding-top: 0;
 }
 
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left:  15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom:  1px solid #E5E5E5;
+  box-shadow:     0 1px 3px rgba(0, 0, 0, .05);
+  margin:         10px;
+  padding-bottom: 10px;
+}
+
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  line-height:   40px;
+  margin-bottom: 0;
+  margin-top:    0;
+}
+
+/* Custom page footer */
+.footer {
+  border-top:  1px solid #E5E5E5;
+  color:       #777777;
+  padding-top: 19px;
+}

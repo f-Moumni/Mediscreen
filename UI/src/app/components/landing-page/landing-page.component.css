@@ -1,0 +1,31 @@
+.body {
+  align-items:      center;
+  background-color: #FFFFFF;
+  box-shadow:       10px 10px 30px rgba(0, 0, 0, .05);
+  box-sizing:       border-box;
+  display:          flex;
+  height:           500px;
+  margin:           8% auto;
+  padding:          10px 100px;
+
+}
+
+h2 {
+  font-weight: bolder;
+  padding:     20px 0;
+}
+
+p {
+  font-size: 20px;
+
+}
+
+.landing-infos {
+  margin: 10px 0;
+  width:  70%;
+}
+
+.landing-img {
+  height: auto;
+  width:  300px;
+}
