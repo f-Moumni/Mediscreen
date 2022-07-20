@@ -28,14 +28,14 @@ public class AssessmentController {
     public ResponseEntity<String> getCurlReportById( int patId) {
 
         ReportDto reportDto = assessmentService.generateReportById(patId);
-        String    report    = "Patient : " + reportDto.getPatient() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
+        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
     @PostMapping (value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getCurlReportByFamilyName( String familyName) {
 
         ReportDto reportDto = assessmentService.generateReportByFamilyName(familyName);
-        String    report    = "Patient : " + reportDto.getPatient() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
+        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
 }

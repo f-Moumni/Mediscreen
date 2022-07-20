@@ -68,8 +68,13 @@ table.table tr th:first-child {
 }
 
 table.table tr th:last-child {
-  padding: 12px 25px;
-  width:   120px;
+
+  padding: 12px 2px 12px 60px;
+
+}
+
+table.table tr td:last-child {
+  text-align: center;
 }
 
 table.table-striped tbody tr:nth-of-type(odd) {
@@ -88,7 +93,7 @@ table.table th i {
 
 table.table td:last-child i {
   font-size: 22px;
-  margin:    0 10px;
+  margin:    0 15px;
   opacity:   0.9;
 }
 
@@ -104,8 +109,12 @@ table.table td a:hover {
   color: #2196F3;
 }
 
-table.table td a.view {
+table.table td a.edit {
   color: #FFC107;
+}
+
+table.table td a.view {
+  color: #43888A;
 }
 
 table.table td a.delete {
@@ -127,18 +136,6 @@ table.table .avatar {
   margin: 0 0 5px;
 }
 
-.pagination li a {
-  border:        none;
-  border-radius: 2px !important;
-  color:         #999999;
-  font-size:     13px;
-  line-height:   30px;
-  margin:        0 2px;
-  min-height:    30px;
-  min-width:     30px;
-  padding:       0 6px;
-  text-align:    center;
-}
 
 .pagination li a:hover {
   color: #666666;

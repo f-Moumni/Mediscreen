@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Patient} from "../../model/patient.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {PatientService} from "../../service/Patient.service";
-import {take, tap} from "rxjs";
+import {map, take} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
+import {ReportService} from "../../service/report.service";
+import {Report} from "../../model/report";
 
 @Component({
   selector: 'app-patient',
@@ -12,70 +12,49 @@ import {HttpErrorResponse} from "@angular/common/http";
   styleUrls: ['./patient.component.css']
 })
 export class PatientComponent implements OnInit {
-  patient!: Patient;
-  editForm!: FormGroup;
+  report!: Report;
+  patientForm!: FormGroup;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private patientService: PatientService,
+              private reportService: ReportService,
               private formBuilder: FormBuilder) {
-    this.editForm = this.formBuilder.group({
+    this.patientForm = this.formBuilder.group({
       id: [0],
-      firstName: [null, [
-        Validators.required,
-        Validators.maxLength(25)]],
-      lastName: [null, [
-        Validators.required,
-        Validators.maxLength(25)]],
-      birthdate: [null, [
-        Validators.required]],
-      gender: [null,
-        Validators.required
-      ],
-      address: [null, Validators.minLength(5)],
-      phone: [null, [
-        Validators.minLength(10),
-        Validators.maxLength(20)]]
+      name: [null],
+      age: [null],
+      riskLevel: [null],
+      gender: [null],
+      address: [null],
+      phone: [null]
     })
+
   }
 
   ngOnInit(): void {
-    this.getPatient();
+    this.getReportPatient();
   }
 
-  getPatient() {
+  getReportPatient() {
     const patientId = +this.route.snapshot.params['id'];
-    this.patientService.getPatientById(patientId).pipe(
+    this.reportService.getReportByPatientId(patientId).pipe(
       take(1),
-      tap(event => {
-        this.patient = event;
-        this.editForm.setValue(
+      map(event => {
+        this.report = event;
+        this.patientForm.setValue(
           {
-            id: this.patient.id,
-            firstName: this.patient.firstName,
-            lastName: this.patient.lastName,
-            birthdate: this.patient.birthdate,
-            gender: this.patient.gender,
-            address: this.patient.address,
-            phone: this.patient.phone
+            id: this.report.id,
+            name: this.report.name,
+            age: this.report.age,
+            riskLevel: this.report.riskLevel,
+            gender: this.report.gender,
+            address: this.report.address,
+            phone: this.report.phone
           })
       }, (error: HttpErrorResponse) => {
         this.router.navigate(['404'])
       })).subscribe()
   }
 
-  onEditPatient() {
-    this.patientService.updatePatient(this.editForm.value).pipe(
-      take(1),
-      tap(p => {
-          this.patient = p;
-        }, (error: HttpErrorResponse) => {
-          console.log(error.message)
-        }
-      )).subscribe()
-  }
 
-  onCancel() {
-    this.getPatient();
-  }
 }

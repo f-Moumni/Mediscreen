@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReportMapper {
 
-
     public ReportDto toReportDto(PatientDto patient, RiskLevel riskLevel, int age) {
-        ReportDto report = new ReportDto();
-        report.setPatient(patient.getLastName() + " " + patient.getFirstName());
-        report.setAge(age);
-        report.setRiskLevel(riskLevel.toString());
-        return report;
+
+        return new ReportDto((int) patient.getId(), patient.getFirstName() + " " + patient.getLastName(),
+                age, patient.getGender(), patient.getAddress(), patient.getPhone(), riskLevel.toString());
+
     }
 }
