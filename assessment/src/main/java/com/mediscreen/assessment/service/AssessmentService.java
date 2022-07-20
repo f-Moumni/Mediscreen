@@ -38,8 +38,6 @@ public class AssessmentService {
 
     public RiskLevel riskAssess(PatientDto patient) {
 
-
-
         boolean    isOlderThenThirty        = calculator.isOlderThenThirty(patient.getBirthdate());
         Gender     gender                   = patient.getGender();
         int        terminologyTriggersCount = calculateTerminologyTriggers(Math.toIntExact(patient.getId()));

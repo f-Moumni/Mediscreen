@@ -11,7 +11,7 @@ public class ReportMapper {
     public ReportDto toReportDto(PatientDto patient, RiskLevel riskLevel, int age) {
 
         return new ReportDto((int) patient.getId(), patient.getFirstName() + " " + patient.getLastName(),
-                age, patient.getGender(), patient.getAddress(), patient.getPhone(), riskLevel.toString());
+                age, patient.getGender(), patient.getAddress(), patient.getPhone(), riskLevel);
 
     }
 }

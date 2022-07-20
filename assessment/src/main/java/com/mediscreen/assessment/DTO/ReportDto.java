@@ -1,10 +1,42 @@
 package com.mediscreen.assessment.DTO;
 
 import com.mediscreen.assessment.enums.Gender;
+import com.mediscreen.assessment.enums.RiskLevel;
 
 public class ReportDto {
 
     private int id;
+    /**
+     * Patient's name
+     **/
+
+    private String name;
+    /**
+     * Patient's age
+     */
+    private int age;
+    private Gender gender;
+    private String address;
+    private String phone;
+    /**
+     * diabetes assessment
+     */
+    private RiskLevel riskLevel;
+
+    public ReportDto() {
+
+    }
+
+    public ReportDto(int id, String name, int age, Gender gender, String address, String phone, RiskLevel riskLevel) {
+
+        this.id        = id;
+        this.name      = name;
+        this.age       = age;
+        this.gender    = gender;
+        this.address   = address;
+        this.phone     = phone;
+        this.riskLevel = riskLevel;
+    }
 
     public int getId() {
 
@@ -14,43 +46,6 @@ public class ReportDto {
     public void setId(int id) {
 
         this.id = id;
-    }
-
-    /**
-     * Patient's name
-     **/
-
-    private String name;
-
-    /**
-     * Patient's age
-     */
-    private int age;
-
-    private Gender gender;
-
-    private String address;
-
-    private String phone;
-
-    /**
-     * diabetes assessment
-     */
-    private String riskLevel;
-
-    public ReportDto() {
-
-    }
-
-    public ReportDto(int id, String name, int age, Gender gender, String address, String phone, String riskLevel) {
-
-        this.id        = id;
-        this.name      = name;
-        this.age       = age;
-        this.gender    = gender;
-        this.address   = address;
-        this.phone     = phone;
-        this.riskLevel = riskLevel;
     }
 
     public String getName() {
@@ -103,12 +98,12 @@ public class ReportDto {
         this.phone = phone;
     }
 
-    public String getRiskLevel() {
+    public RiskLevel getRiskLevel() {
 
         return riskLevel;
     }
 
-    public void setRiskLevel(String riskLevel) {
+    public void setRiskLevel(RiskLevel riskLevel) {
 
         this.riskLevel = riskLevel;
     }

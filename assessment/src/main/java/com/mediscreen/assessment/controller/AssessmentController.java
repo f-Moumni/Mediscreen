@@ -24,18 +24,21 @@ public class AssessmentController {
         return new ResponseEntity<>(assessmentService.generateReportById(patientId), HttpStatus.OK);
     }
 
-    @PostMapping (value = "id", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getCurlReportById( int patId) {
+    @PostMapping(value = "id", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCurlReportById(int patId) {
 
         ReportDto reportDto = assessmentService.generateReportById(patId);
-        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
+        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel()
+                                                                                                                                           .toString();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
-    @PostMapping (value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getCurlReportByFamilyName( String familyName) {
+
+    @PostMapping(value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCurlReportByFamilyName(String familyName) {
 
         ReportDto reportDto = assessmentService.generateReportByFamilyName(familyName);
-        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel();
+        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel()
+                                                                                                                                           .toString();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
 }

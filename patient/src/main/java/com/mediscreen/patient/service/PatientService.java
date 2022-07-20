@@ -45,13 +45,17 @@ public class PatientService {
     }
 
     public Patient findById(long id) throws RessourceNotFoundException {
+
         return patientRepository.findById(id)
                                 .orElseThrow(() -> new RessourceNotFoundException("user with id: " + id + " not found"));
     }
 
     public Patient findByLatName(String lastName) throws RessourceNotFoundException {
+
         return patientRepository.findByLastName(lastName)
-                                .orElseThrow(() -> new RessourceNotFoundException("user with lastname : " + lastName+ " not found"));
+                                .stream()
+                                .findAny()
+                                .orElseThrow(() -> new RessourceNotFoundException("user with lastname : " + lastName + " not found"));
     }
 
 }
