@@ -13,6 +13,7 @@ import {NotesComponent} from './components/notes/notes.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { PageNotFoundComponent } from './components/pagenotfound/page-not-found.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ReportComponent } from './components/report/report.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     HeaderComponent,
     NotesComponent,
     PageNotFoundComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    ReportComponent
   ],
   imports: [
     BrowserModule,

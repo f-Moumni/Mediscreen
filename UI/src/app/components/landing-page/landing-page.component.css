@@ -5,7 +5,7 @@
   box-sizing:       border-box;
   display:          flex;
   height:           500px;
-  margin:           8% auto;
+  margin:           4% auto;
   padding:          10px 100px;
 
 }
@@ -28,4 +28,10 @@ p {
 .landing-img {
   height: auto;
   width:  300px;
+}
+
+.footer {
+  border-top:  1px solid #E5E5E5;
+  color:       #777777;
+  padding-top: 19px;
 }

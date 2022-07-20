@@ -11,6 +11,7 @@ export const environment = {
   },
   Patient_API : 'http://localhost:8081',
   Note_API:'http://localhost:8082',
+  Assess_API : 'http://localhost:8080',
 };
 
 /*

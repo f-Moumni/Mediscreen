@@ -4,20 +4,14 @@
 }
 
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left:  15px;
-  padding-right: 15px;
-}
-
 /* Custom page header */
 .header {
   border-bottom:  1px solid #E5E5E5;
   box-shadow:     0 1px 3px rgba(0, 0, 0, .05);
   margin:         10px;
-  padding-bottom: 10px;
+  padding-bottom: 0;
+  padding-left:   15px;
+  padding-right:  15px;
 }
 
 /* Make the masthead heading the same height as the navigation */
@@ -27,9 +21,9 @@
   margin-top:    0;
 }
 
-/* Custom page footer */
-.footer {
-  border-top:  1px solid #E5E5E5;
-  color:       #777777;
-  padding-top: 19px;
+.active {
+  background-color: #435D7D;
+  color:            #FFFFFF;
+
 }
+
