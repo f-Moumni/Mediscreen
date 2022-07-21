@@ -2,7 +2,9 @@
   <nav>
     <ul class="nav nav-pills pull-right">
       <li><a routerLink='/home' routerLinkActive="active">Home</a></li>
-      <li><a routerLink='/patients' routerLinkActive="active">Manage Patients</a></li>
+      <li><a [routerLinkActiveOptions]="{ exact: true }" routerLink='/patients' routerLinkActive="active">Manage
+                                                                                                          Patients</a>
+      </li>
 
     </ul>
   </nav>

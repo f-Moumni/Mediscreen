@@ -82,11 +82,13 @@ public class AssessmentService {
         int age=calculator.calculateAge(patient.getBirthdate());
         return reportMapper.toReportDto(patient,riskLevel,age);
     }
-    public ReportDto generateReportByFamilyName(String familyName) {
-        PatientDto patient   = patientProxy.getPatientByFamilyName(familyName);
-        RiskLevel  riskLevel = riskAssess(patient);
-        int age=calculator.calculateAge(patient.getBirthdate());
-        return reportMapper.toReportDto(patient,riskLevel,age);
+    public List<ReportDto> generateReportByFamilyName(String familyName) {
+         return patientProxy.getPatientByFamilyName(familyName).stream().map(p -> {
+            RiskLevel  riskLevel = riskAssess(p);
+            int age=calculator.calculateAge(p.getBirthdate());
+            return reportMapper.toReportDto(p,riskLevel,age);
+        }).collect(Collectors.toList());
+
     }
 }
 

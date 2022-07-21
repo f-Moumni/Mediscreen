@@ -8,6 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @CrossOrigin(origins = "*")
 @RequestMapping("assess")
 @RestController
@@ -28,17 +31,18 @@ public class AssessmentController {
     public ResponseEntity<String> getCurlReportById(int patId) {
 
         ReportDto reportDto = assessmentService.generateReportById(patId);
-        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel()
-                                                                                                                                           .toString();
+        String report = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel()
+                                                                                                                                     .toString();
         return new ResponseEntity<>(report, HttpStatus.OK);
     }
 
     @PostMapping(value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getCurlReportByFamilyName(String familyName) {
+    public ResponseEntity<List<String>> getCurlReportByFamilyName(String familyName) {
 
-        ReportDto reportDto = assessmentService.generateReportByFamilyName(familyName);
-        String    report    = "Patient : " + reportDto.getName() + " (age " + reportDto.getAge() + ") diabetes assessment is: " + reportDto.getRiskLevel()
-                                                                                                                                           .toString();
-        return new ResponseEntity<>(report, HttpStatus.OK);
+        List<String> reports = assessmentService.generateReportByFamilyName(familyName).stream().map(p -> {
+            return "Patient : " + p.getName() + " (age " + p.getAge() + ") diabetes assessment is: " + p.getRiskLevel()
+                                                                                                        .toString();
+        }).collect(Collectors.toList());
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 }

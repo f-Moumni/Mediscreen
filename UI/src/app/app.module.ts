@@ -13,6 +13,7 @@ import {NotesComponent} from './components/notes/notes.component';
 import {NgxPaginationModule} from "ngx-pagination";
 import { PageNotFoundComponent } from './components/pagenotfound/page-not-found.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     NotesComponent,
     PageNotFoundComponent,
     LandingPageComponent,
+    FooterComponent,
 
   ],
   imports: [

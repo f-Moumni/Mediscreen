@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Service
 @FeignClient(value = "patient", url = "${mediscreeen.patientUrl}")
 public interface PatientProxy {
@@ -14,6 +16,6 @@ public interface PatientProxy {
     public PatientDto getPatientById(@RequestParam Long id);
 
     @GetMapping("patient/lastname")
-    public PatientDto getPatientByFamilyName(@RequestParam String lastname);
+    public List<PatientDto> getPatientByFamilyName(@RequestParam String lastname);
 }
 
