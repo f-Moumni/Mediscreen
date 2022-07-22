@@ -51,7 +51,6 @@ public class AssessmentService {
             } else {
                 return (terminologyTriggersCount >= 2) ? RiskLevel.BORDERLINE : RiskLevel.NONE;
             }
-
         } else {
             if (gender.equals(Gender.FEMININE)) {
                 if (terminologyTriggersCount >= 7) {
