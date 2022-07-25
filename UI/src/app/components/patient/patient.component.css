@@ -236,18 +236,37 @@ table.table .avatar {
   font-weight: normal;
 }
 
+.inDanger .none .borderline .early_onSet {
+  font-weight: bold;
+  text-align:  center;
+}
+
 .inDanger {
-  color: orange;
+  background-color: #EAAE34;
+  border-width:     0;
+  font-weight:      bold;
+  text-align:       center;
 }
 
 .none {
-  color: green;
+  background-color: #10A910;
+  border-width:     0;
+  color:            white;
+  font-weight:      bold;
+  text-align:       center;
 }
 
 .borderline {
-  color: #D0D052;
+  background-color: #F3F36A;
+  border-width:     0;
+  font-weight:      bold;
+  text-align:       center;
 }
 
 .early_onSet {
-  color: #CA0505;
+  background-color: #CA0505;
+  border-width:     0;
+  color:            white;
+  font-weight:      bold;
+  text-align:       center;
 }

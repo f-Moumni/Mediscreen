@@ -36,7 +36,7 @@ services:
         ports:
             - "27017:27017"
         volumes:
-            - mongodata:/mongodata
+            - mongodata:/data/db
         networks:
             - mediscreen_network
     notes:

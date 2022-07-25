@@ -6,7 +6,17 @@
     <h3 class="h3 my-5 font-weight-normal text-center">Patient's Medical Record</h3>
     <form [formGroup]="patientForm" class="form-card">
       <div class="form-body">
+        <div class="form-group">
 
+          <input
+            [ngClass]="{'none' : report.riskLevel==RiskLevel.NONE ,
+                    'borderline':report.riskLevel==RiskLevel.BORDERLINE,
+                    'inDanger':report.riskLevel==RiskLevel.IN_DANGER,
+                     'early_onSet':report.riskLevel==RiskLevel.EARLY_ONSET}" class="material-icons"
+            class="form-control" formControlName="riskLevel" readonly
+            type="text"
+          >
+        </div>
         <div class="group-control">
           <div class="form-group">
             <label>Gender</label>
@@ -32,16 +42,8 @@
         <div class="group-control">
 
           <div class="form-group">
-            <label>Risk Diabetes <span
-              [ngClass]="{'none' : report.riskLevel==RiskLevel.NONE ,
-                    'borderline':report.riskLevel==RiskLevel.BORDERLINE,
-                    'inDanger':report.riskLevel==RiskLevel.IN_DANGER,
-                     'early_onSet':report.riskLevel==RiskLevel.EARLY_ONSET}" class="material-icons"
-            >flag </span></label>
-            <input
-              class="form-control" formControlName="riskLevel" readonly
-              type="text"
-            >
+            <label>Address</label>
+            <textarea class="form-control" formControlName="address" readonly></textarea>
           </div>
           <div class="form-group">
             <label>Phone</label>
@@ -49,10 +51,6 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Address</label>
-          <textarea class="form-control" formControlName="address" readonly></textarea>
-        </div>
 
       </div>
     </form>

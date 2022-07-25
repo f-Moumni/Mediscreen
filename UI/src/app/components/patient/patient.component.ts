@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {BehaviorSubject, map, take, tap} from "rxjs";
+import {BehaviorSubject, take, tap} from "rxjs";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ReportService} from "../../service/report.service";
 import {Report} from "../../model/report";
@@ -51,7 +51,6 @@ export class PatientComponent implements OnInit {
       phone: [null]
     })
     this.saveForm = this.formBuilder.group({
-
       date: [null, [
         Validators.required]],
       note: [null, [Validators.required, Validators.minLength(5)]],
@@ -61,6 +60,7 @@ export class PatientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.patientId = +this.route.snapshot.params['id'];
     this.getNotes();
     this.getReportPatient();
@@ -70,7 +70,7 @@ export class PatientComponent implements OnInit {
 
     this.reportService.getReportByPatientId(this.patientId).pipe(
       take(1),
-      map(event => {
+      tap(event => {
         this.report = event;
         this.patientForm.setValue(
           {
@@ -82,8 +82,10 @@ export class PatientComponent implements OnInit {
             address: this.report.address,
             phone: this.report.phone
           })
-      }, (error: HttpErrorResponse) => {
-        this.router.navigate(['404'])
+      }, (err: HttpErrorResponse) => {
+        if (err instanceof HttpErrorResponse) {
+          this.router.navigate(['404'])
+        }
       })).subscribe()
   }
 
