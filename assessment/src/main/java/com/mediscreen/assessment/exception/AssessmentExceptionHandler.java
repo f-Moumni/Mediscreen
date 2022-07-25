@@ -1,8 +1,7 @@
-package com.mediscreen.patient.exception;
+package com.mediscreen.assessment.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -10,11 +9,11 @@ import org.springframework.web.context.request.WebRequest;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class PatientExceptionHandler {
+public class AssessmentExceptionHandler {
 
-    @ExceptionHandler(RessourceNotFoundException.class)
-    public ResponseEntity<Object> handleDataNoteFoundException(
-            RessourceNotFoundException e, WebRequest request) {
+    @ExceptionHandler(Ressource4XXException.class)
+    public ResponseEntity<Object> handleRessourceNotFoundException(
+            Ressource4XXException e, WebRequest request) {
 
         ExceptionDetails exception = new ExceptionDetails(LocalDateTime.now(),
                 e.getMessage(), HttpStatus.NOT_FOUND,

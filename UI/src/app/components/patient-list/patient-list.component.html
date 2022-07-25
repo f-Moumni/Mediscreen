@@ -94,6 +94,24 @@
           </div>
           <div class="modal-body">
             <div class="form-group">
+              <label>Gender</label>
+              <select
+                class="form-control"
+                formControlName="gender" required
+              >
+                <option value="FEMININE">FEMININE</option>
+                <option value="MASCULINE">MASCULINE</option>
+              </select>
+              <div
+                *ngIf="saveForm.controls['gender'].invalid && (saveForm.controls['gender'].dirty || saveForm.controls['gender'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['gender'].errors?.['required']">
+                  gender is required.
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
               <label>First Name</label>
               <input class="form-control" formControlName="firstName" required type="text">
               <div
@@ -138,24 +156,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <label>Gender</label>
-              <select
-                class="form-control"
-                formControlName="gender" required
-              >
-                <option value="FEMININE">FEMININE</option>
-                <option value="MASCULINE">MASCULINE</option>
-              </select>
-              <div
-                *ngIf="saveForm.controls['gender'].invalid && (saveForm.controls['gender'].dirty || saveForm.controls['gender'].touched)"
-                class="alert alert-danger"
-              >
-                <div *ngIf="saveForm.controls['gender'].errors?.['required']">
-                  gender is required.
-                </div>
-              </div>
-            </div>
+
             <div class="form-group">
               <label>Address</label>
               <textarea class="form-control" formControlName="address"></textarea>

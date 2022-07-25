@@ -10,22 +10,22 @@
         <div class="group-control">
           <div class="form-group">
             <label>Gender</label>
-            <input class="form-control" formControlName="gender" readonly required type="text">
+            <input class="form-control" formControlName="gender" readonly type="text">
           </div>
           <div class="form-group">
             <label>ID</label>
-            <input class="form-control" formControlName="id" readonly required type="text">
+            <input class="form-control" formControlName="id" readonly type="text">
           </div>
         </div>
         <div class="group-control">
           <div class="form-group">
             <label>Name</label>
-            <input class="form-control" formControlName="name" readonly required type="text">
+            <input class="form-control" formControlName="name" readonly type="text">
 
           </div>
           <div class="form-group">
             <label>Age</label>
-            <input class="form-control " formControlName="age" readonly required type="text">
+            <input class="form-control " formControlName="age" readonly type="text">
           </div>
 
         </div>
@@ -39,7 +39,7 @@
                      'early_onSet':report.riskLevel==RiskLevel.EARLY_ONSET}" class="material-icons"
             >flag </span></label>
             <input
-              class="form-control" formControlName="riskLevel" readonly required
+              class="form-control" formControlName="riskLevel" readonly
               type="text"
             >
           </div>
@@ -156,7 +156,7 @@
 
                 <div class="form-group">
                   <label>Note</label>
-                  <textarea class="form-control" formControlName="note"></textarea>
+                  <textarea class="form-control" formControlName="note" required></textarea>
                   <div
                     *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
               saveForm.controls['note'].touched)"
@@ -174,7 +174,7 @@
             </div>
             <div class="modal-footer">
               <input #addCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-              <input class="btn btn-success" type="submit" value="Add">
+              <input [disabled]="saveForm.invalid" class="btn btn-success" type="submit" value="Add">
             </div>
           </form>
         </div>
@@ -213,7 +213,7 @@
 
               <div class="form-group">
                 <label>Note</label>
-                <textarea class="form-control" formControlName="note"></textarea>
+                <textarea class="form-control" formControlName="note" required></textarea>
                 <div
                   *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
               saveForm.controls['note'].touched)"
@@ -230,7 +230,7 @@
             </div>
             <div class="modal-footer">
               <input #editCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-              <input class="btn btn-success" type="submit" value="Save">
+              <input [disabled]="editNoteForm.invalid" class="btn btn-success" type="submit" value="Save">
             </div>
           </form>
         </div>
