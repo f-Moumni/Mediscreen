@@ -23,6 +23,7 @@ export class PatientListComponent implements OnInit {
   page: number = 1;
   count: number = 0;
   tableSize: number = 5;
+  maxDate: any;
   @ViewChild('cancelEditbutton') cancelEditbutton!: any;
   @ViewChild('closebutton') closebutton!: any;
   @ViewChild('cancelbutton') cancelbutton!: any;
@@ -67,8 +68,22 @@ export class PatientListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.futureDateDisable();
     this.getPatients();
+  }
 
+  futureDateDisable() {
+    var date: any = new Date();
+    var todayDate: any = date.getDate();
+    var month: any = date.getMonth() + 1;
+    var year: any = date.getFullYear()
+    if (todayDate < 10) {
+      todayDate = '0' + todayDate;
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+    this.maxDate = year + "-" + month + "-" + todayDate;
   }
 
   getPatients() {

@@ -7,7 +7,6 @@
     <form [formGroup]="patientForm" class="form-card">
       <div class="form-body">
         <div class="form-group">
-
           <input
             [ngClass]="{'none' : report.riskLevel==RiskLevel.NONE ,
                     'borderline':report.riskLevel==RiskLevel.BORDERLINE,
@@ -31,7 +30,6 @@
           <div class="form-group">
             <label>Name</label>
             <input class="form-control" formControlName="name" readonly type="text">
-
           </div>
           <div class="form-group">
             <label>Age</label>
@@ -40,7 +38,6 @@
 
         </div>
         <div class="group-control">
-
           <div class="form-group">
             <label>Address</label>
             <textarea class="form-control" formControlName="address" readonly></textarea>
@@ -50,15 +47,13 @@
             <input class="form-control" formControlName="phone" readonly type="text">
           </div>
         </div>
-
-
       </div>
     </form>
   </div>
 </div>
 <div class="ng-container">
   <div class="container">
-    <h3 class="h3 my-5 font-weight-normal text-center">Manage Notes</h3>
+
     <div class="table-responsive">
       <div class="table-wrapper">
         <div class="table-title">

@@ -26,7 +26,7 @@ export class PatientComponent implements OnInit {
   dataSubject = new BehaviorSubject<Note[]>(null);
   oneNote !: Note;
   isLoad = false;
-  date!: Date;
+  date!: any;
   page: number = 1;
   count: number = 0;
   tableSize: number = 5;
@@ -50,17 +50,18 @@ export class PatientComponent implements OnInit {
       address: [null],
       phone: [null]
     })
-    this.saveForm = this.formBuilder.group({
-      date: [null, [
-        Validators.required]],
-      note: [null, [Validators.required, Validators.minLength(5)]],
 
-    })
 
   }
 
   ngOnInit(): void {
+    this.getDefaultDate()
+    this.saveForm = this.formBuilder.group({
+      date: [this.date, [
+        Validators.required]],
+      note: [null, [Validators.required, Validators.minLength(5)]],
 
+    })
     this.patientId = +this.route.snapshot.params['id'];
     this.getNotes();
     this.getReportPatient();
@@ -161,6 +162,19 @@ export class PatientComponent implements OnInit {
     })
   }
 
+  getDefaultDate() {
+    var date: any = new Date();
+    var todayDate: any = date.getDate();
+    var month: any = date.getMonth() + 1;
+    var year: any = date.getFullYear()
+    if (todayDate < 10) {
+      todayDate = '0' + todayDate;
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+    this.date = year + "-" + month + "-" + todayDate;
+  }
 
   onTableDataChange(event: any) {
     this.page = event;
