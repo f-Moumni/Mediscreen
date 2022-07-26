@@ -38,7 +38,7 @@ public class PatientController {
     }
 
     @GetMapping("lastname")
-    public ResponseEntity<List<Patient>> getPatientByLastName(@RequestParam String lastname) throws RessourceNotFoundException {
+    public ResponseEntity<List<Patient>> getPatientByLastName(@RequestParam String lastname)  {
 
         return new ResponseEntity<>(patientService.findByLatName(lastname), OK);
     }

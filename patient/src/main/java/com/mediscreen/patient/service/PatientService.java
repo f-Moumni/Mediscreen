@@ -50,7 +50,7 @@ public class PatientService {
                                 .orElseThrow(() -> new RessourceNotFoundException("user with id: " + id + " not found"));
     }
 
-    public List<Patient> findByLatName(String lastName) throws RessourceNotFoundException {
+    public List<Patient> findByLatName(String lastName)  {
 
         return patientRepository.findByLastName(lastName);
 

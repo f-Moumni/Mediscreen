@@ -1,51 +1,40 @@
-package com.mediscreen.patient.model;
+package com.mediscreen.note.dto;
 
-import com.mediscreen.patient.constant.Gender;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
-@Entity
-public class Patient {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PatientDto {
+
+
     private long id;
 
     /**
      * Patient's first name
      **/
-    @Column(nullable = false)
-    @NotBlank(message = "required")
+
     private String firstName;
 
     /**
      * Patient's last name
      **/
-    @Column(nullable = false)
-    @NotBlank(message = "required")
+
     private String lastName;
 
-    @Column(nullable = false)
-    @PastOrPresent
+
     private LocalDate birthdate;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Gender    gender;
+
+    private String gender;
 
     private String address;
 
     private String phone;
 
 
-    public Patient() {
+    public PatientDto() {
 
     }
 
-    public Patient(long id, String firstName, String lastName, LocalDate birthdate, Gender gender, String address, String phone) {
+    public PatientDto(long id, String firstName, String lastName, LocalDate birthdate, String gender, String address, String phone) {
 
         this.id        = id;
         this.firstName = firstName;
@@ -97,12 +86,12 @@ public class Patient {
         this.birthdate = birthdate;
     }
 
-    public Gender getGender() {
+    public String getGender() {
 
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
 
         this.gender = gender;
     }

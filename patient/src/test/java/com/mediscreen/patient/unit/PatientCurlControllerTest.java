@@ -3,6 +3,7 @@ package com.mediscreen.patient.unit;
 import com.mediscreen.patient.constant.Gender;
 import com.mediscreen.patient.controller.PatientCurlController;
 import com.mediscreen.patient.dto.PatientDto;
+import com.mediscreen.patient.exception.RessourceNotFoundException;
 import com.mediscreen.patient.model.Patient;
 import com.mediscreen.patient.service.PatientService;
 import com.mediscreen.patient.util.JsonTestMapper;
@@ -54,7 +55,6 @@ public class PatientCurlControllerTest {
     void getAllPatientsTest_shouldReturnListOfPatientDto() throws Exception {
         //Arrange
         when(patientService.getAllPatients()).thenReturn(List.of(patient));
-
         //Act
         mvc.perform(get("/patient/getAll")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -69,7 +69,6 @@ public class PatientCurlControllerTest {
     void updatePatientTest_shouldReturnPatientDtoUpdated() throws Exception {
         //Arrange
         when(patientService.updatePatient(patient)).thenReturn(patient);
-
         //Act
         mvc.perform(put("/patient/update")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -103,5 +102,7 @@ public class PatientCurlControllerTest {
            .andExpect(status().isOk());
 
     }
+
+
 
 }

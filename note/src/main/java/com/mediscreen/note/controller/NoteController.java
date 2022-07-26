@@ -23,9 +23,9 @@ public class NoteController {
 
 
     @PostMapping
-    public ResponseEntity<Note> saveNote(@RequestBody Note newNote) {
-
-        return new ResponseEntity<>(noteService.saveNote(newNote), HttpStatus.CREATED);
+    public ResponseEntity<Note> saveNote(@RequestBody Note newNote) throws RessourceNotFoundException {
+        Note note = noteService.saveNote(newNote);
+        return new ResponseEntity<>(note, HttpStatus.CREATED);
     }
 
     @PutMapping

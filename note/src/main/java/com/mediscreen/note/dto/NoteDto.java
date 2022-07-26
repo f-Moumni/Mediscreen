@@ -1,8 +1,12 @@
 package com.mediscreen.note.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class NoteDto {
 
+    @NotBlank(message = "required")
     private String patId;
+    @NotBlank(message = "required")
     private String e;
 
     public NoteDto() {
@@ -10,6 +14,7 @@ public class NoteDto {
     }
 
     public NoteDto(String patId, String e) {
+
         this.patId = patId;
         this.e     = e;
     }

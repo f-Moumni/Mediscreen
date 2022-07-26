@@ -1,6 +1,5 @@
 package com.mediscreen.note.integration;
 
-import com.mediscreen.note.exception.RessourceNotFoundException;
 import com.mediscreen.note.model.Note;
 import com.mediscreen.note.repository.NoteRepository;
 import com.mediscreen.note.util.JsonTestMapper;
@@ -15,14 +14,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
-import java.util.List;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ActiveProfiles(" test ")
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class NoteControllerIT {
@@ -31,6 +28,7 @@ public class NoteControllerIT {
     Note note = new Note("62d12c25191bcc3f11d08547", 1, LocalDate.now(), "a few notes for a test");
     @Autowired
     NoteRepository noteRepository;
+
     @Autowired
     private MockMvc mvc;
 
@@ -44,7 +42,6 @@ public class NoteControllerIT {
     void tearDown() {
 
         noteRepository.delete(note);
-
     }
 
     @Test
@@ -59,9 +56,9 @@ public class NoteControllerIT {
 
     }
 
+
     @Test
     void updateNoteTest_shouldReturnNoteUpdated() throws Exception {
-
         //Act
         mvc.perform(put("/note")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -71,16 +68,17 @@ public class NoteControllerIT {
 
     }
 
-    // @Test
+    @Test
     void updateNoteTest_shouldReturnStatus404() throws Exception {
-
+        //Arrange
+        Note note1 = new Note(1, LocalDate.now(), "a few notes for a test");
+        note1.setId("62d12c25191bcc3f11d08544");
         //Act
         mvc.perform(put("/note")
                    .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(note)))
+                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(note1)))
            .andDo(print())
            .andExpect(status().isNotFound());
-
     }
 
     @Test
@@ -97,6 +95,7 @@ public class NoteControllerIT {
 
     @Test
     void deleteNoteTest_shouldReturnStatus404() throws Exception {
+
         noteRepository.delete(note);
         //Act
         mvc.perform(delete("/note")
@@ -104,12 +103,10 @@ public class NoteControllerIT {
                    .accept(MediaType.APPLICATION_JSON).param("id", "62d12c25191bcc3f11d08547"))
            .andDo(print())
            .andExpect(status().isNotFound());
-
     }
 
     @Test
     void getAllNoteTest_shouldReturnListOfNote() throws Exception {
-
         //Act
         mvc.perform(get("/note")
                    .contentType(MediaType.APPLICATION_JSON)

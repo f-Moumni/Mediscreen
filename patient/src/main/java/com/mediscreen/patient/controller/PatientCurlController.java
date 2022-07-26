@@ -41,13 +41,13 @@ public class PatientCurlController {
         return new ResponseEntity<>(patientDtoList, OK);
     }
 
-    @PutMapping(value = "update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "update", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<PatientDto> updatePatient(@Valid PatientDto patientDto) throws RessourceNotFoundException {
 
         return new ResponseEntity<>(patientMapper.toPatientDto(patientService.updatePatient(patientMapper.toPatient(patientDto))), OK);
     }
 
-    @PostMapping(value = "add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ResponseEntity<PatientDto> addPatient(@Valid PatientDto patientDto) {
 
         return new ResponseEntity<>(patientMapper.toPatientDto(patientService.savePatient(patientMapper.toPatient(patientDto))), CREATED);

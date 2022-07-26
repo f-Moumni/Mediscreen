@@ -28,14 +28,14 @@ public class NoteCurlController {
     }
 
     @PostMapping(value = "add", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<NoteDto> saveNote(NoteDto newNote) {
+    public ResponseEntity<NoteDto> saveNote(NoteDto newNote) throws RessourceNotFoundException {
 
         return new ResponseEntity<>(noteMapper.toNoteDto(noteService.saveNote(noteMapper.toNote(newNote))), HttpStatus.CREATED);
     }
 
 
 
-    @GetMapping(value = "getAll", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "getAll")
     public ResponseEntity<List<NoteDto>> getAllNote(String patientId) {
 
         return new ResponseEntity<>(noteService.findAllByPatientId(Integer.parseInt(patientId))
@@ -44,7 +44,7 @@ public class NoteCurlController {
                                                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "delete", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "delete")
     public ResponseEntity<NoteDto> deleteNote(String id) throws RessourceNotFoundException {
 
         return new ResponseEntity<>(noteMapper.toNoteDto(noteService.deleteNote(id)), HttpStatus.OK);
