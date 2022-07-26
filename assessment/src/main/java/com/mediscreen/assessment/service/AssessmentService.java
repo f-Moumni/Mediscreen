@@ -20,15 +20,12 @@ public class AssessmentService {
 
 
     private final NoteProxy noteProxy;
-
     private final PatientProxy patientProxy;
-
     private final Calculator calculator;
     private final ReportMapper reportMapper;
 
     @Autowired
     public AssessmentService(NoteProxy noteProxy, PatientProxy patientProxy, Calculator ageCalculator, ReportMapper reportMapper) {
-
         this.noteProxy    = noteProxy;
         this.patientProxy = patientProxy;
         this.calculator   = ageCalculator;

@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class AssessmentExceptionHandler {
 
-    @ExceptionHandler(Ressource4XXException.class)
+    @ExceptionHandler(RessourceNotfoundException.class)
     public ResponseEntity<Object> handleRessourceNotFoundException(
-            Ressource4XXException e, WebRequest request) {
+            RessourceNotfoundException e, WebRequest request) {
 
         ExceptionDetails exception = new ExceptionDetails(LocalDateTime.now(),
                 e.getMessage(), HttpStatus.NOT_FOUND,

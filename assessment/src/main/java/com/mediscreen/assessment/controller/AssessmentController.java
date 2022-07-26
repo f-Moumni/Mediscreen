@@ -39,10 +39,8 @@ public class AssessmentController {
     @PostMapping(value = "familyName", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> getCurlReportByFamilyName(String familyName) {
 
-        List<String> reports = assessmentService.generateReportByFamilyName(familyName).stream().map(p -> {
-            return "Patient : " + p.getName() + " (age " + p.getAge() + ") diabetes assessment is: " + p.getRiskLevel()
-                                                                                                        .toString();
-        }).collect(Collectors.toList());
+        List<String> reports = assessmentService.generateReportByFamilyName(familyName).stream().map(p -> "Patient : " + p.getName() + " (age " + p.getAge() + ") diabetes assessment is: " + p.getRiskLevel()
+                                                                                                                                                                                           .toString()).collect(Collectors.toList());
         return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 }
