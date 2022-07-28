@@ -57,7 +57,6 @@ public class PatientCurlControllerTest {
         when(patientService.getAllPatients()).thenReturn(List.of(patient));
         //Act
         mvc.perform(get("/patient/getAll")
-                   .contentType(MediaType.APPLICATION_JSON)
                    .accept(MediaType.APPLICATION_JSON))
            .andDo(print())
            .andExpect(status().isOk())
@@ -72,7 +71,13 @@ public class PatientCurlControllerTest {
         //Act
         mvc.perform(put("/patient/update")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .content(JsonTestMapper.asJsonString(patientDto)))
+                   .param("id", "1")
+                   .param("family", "doe")
+                   .param("given", "john")
+                   .param("dob", LocalDate.of(2022, 7, 6).toString())
+                   .param("sex", "M")
+                   .param("address", "33 rue des nations")
+                   .param("phone", "0890009"))
            .andDo(print())
            .andExpect(status().isOk());
     }
@@ -84,7 +89,13 @@ public class PatientCurlControllerTest {
         //Act
         mvc.perform(post("/patient/add")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .content(JsonTestMapper.asJsonString(patient)))
+                   .param("id", "1")
+                   .param("family", "doe")
+                   .param("given", "john")
+                   .param("dob", LocalDate.of(2022, 7, 6).toString())
+                   .param("sex", "M")
+                   .param("address", "33 rue des nations")
+                   .param("phone", "0890009"))
            .andDo(print())
            .andExpect(status().isCreated());
 

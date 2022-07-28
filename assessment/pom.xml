@@ -176,6 +176,12 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude DTO package from test coverage -->
+                        <exclude>**/DTO/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>

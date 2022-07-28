@@ -44,6 +44,7 @@ services:
         image: notes
         container_name: notes
         environment:
+            PATIENT_URL: patient:8081
             MONGODB_HOST: mongodb
             MONGODB_PORT: 27017
             MONGODB_DB: notes

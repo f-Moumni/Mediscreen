@@ -9,9 +9,9 @@ public class CustomErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String invoqueur, Response reponse) {
-        if(reponse.status() == 404  ) {
-            return new RessourceNotfoundException( " 404 error "
-            );
+
+        if (reponse.status() == 404) {
+            return new RessourceNotfoundException(" Patient not found ");
         }
         return defaultErrorDecoder.decode(invoqueur, reponse);
     }
