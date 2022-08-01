@@ -30,7 +30,6 @@ public class PatientCurlController {
         this.patientMapper  = patientMapper;
     }
 
-
     @GetMapping("getAll")
     public ResponseEntity<List<PatientDto>> getAllPatient() {
 

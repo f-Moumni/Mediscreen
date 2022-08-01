@@ -1,4 +1,4 @@
-package com.mediscreen.note.dto;
+package com.mediscreen.note.DTO;
 
 import javax.validation.constraints.NotBlank;
 

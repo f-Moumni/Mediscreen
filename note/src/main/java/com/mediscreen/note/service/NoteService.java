@@ -1,6 +1,6 @@
 package com.mediscreen.note.service;
 
-import com.mediscreen.note.dto.PatientDto;
+import com.mediscreen.note.DTO.PatientDto;
 import com.mediscreen.note.exception.RessourceNotFoundException;
 import com.mediscreen.note.model.Note;
 import com.mediscreen.note.proxy.PatientProxy;

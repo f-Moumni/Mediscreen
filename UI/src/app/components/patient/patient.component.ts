@@ -114,9 +114,16 @@ export class PatientComponent implements OnInit {
           ...this.dataSubject.value, data]);
         this.notes = this.dataSubject.value;
         this.count = this.notes.length;
+        this.getReportPatient();
       })).subscribe()
     this.addCancelbutton.nativeElement.click();
-    this.saveForm.reset();
+    this.saveForm.setValue(
+      {
+        date: this.date,
+        note: ""
+      }
+    )
+
   }
 
   onEditNote() {
@@ -132,11 +139,11 @@ export class PatientComponent implements OnInit {
           ...this.dataSubject.value]);
         this.notes = this.dataSubject.value;
         this.count = this.notes.length;
+        this.getReportPatient();
       })).subscribe()
     this.editCancelbutton.nativeElement.click();
     this.isLoad = false;
-    this.editNoteForm.reset();
-    this.getReportPatient();
+
   }
 
   doRemoveNote() {
@@ -147,6 +154,7 @@ export class PatientComponent implements OnInit {
           ...this.dataSubject.value.filter((note => note.id !== this.oneNote.id))]);
         this.notes = this.dataSubject.value;
         this.count = this.notes.length;
+        this.getReportPatient();
       })).subscribe()
     this.cancelbutton.nativeElement.click();
   }

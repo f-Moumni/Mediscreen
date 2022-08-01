@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.test.context.ActiveProfiles;
 
-@ActiveProfiles("Test")
+
 public class JsonTestMapper {
 
     public static String asJsonString(final Object obj) {

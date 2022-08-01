@@ -141,6 +141,12 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude DTO package from test coverage -->
+                        <exclude>**/DTO/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -186,6 +192,12 @@
                         </reports>
                     </reportSet>
                 </reportSets>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude DTO package from test coverage -->
+                        <exclude>**/DTO/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </reporting>

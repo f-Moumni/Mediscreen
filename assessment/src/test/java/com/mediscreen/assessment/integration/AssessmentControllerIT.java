@@ -33,7 +33,7 @@ public class AssessmentControllerIT {
         mvc.perform(get("/assess")
                    .contentType(MediaType.APPLICATION_JSON)
                    .accept(MediaType.APPLICATION_JSON)
-                   .param("patientId", "1"))
+                   .param("patientId", "4"))
            .andDo(print())
            .andExpect(status().isOk());
     }
@@ -62,19 +62,19 @@ public class AssessmentControllerIT {
            //Act
         mvc.perform(post("/assess/id")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .param("patId", "1"))
+                   .param("patId", "4"))
            .andDo(print())
            .andExpect(status().isOk());
 
     }
 
     @Test
-    public void getCurlReportById_shouldReturnReport_ForGivenPatientFamilyName() throws Exception {
+    public void getCurlReportByFamilyName_shouldReturnReport_ForGivenPatientFamilyName() throws Exception {
 
         //Act
         mvc.perform(post("/assess/familyName")
                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-                   .param("familyName", "doe"))
+                   .param("familyName", "Pippa"))
            .andDo(print())
            .andExpect(status().isOk());
     }

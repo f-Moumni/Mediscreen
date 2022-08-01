@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class NoteControllerIT {
 
 
-    Note note = new Note("62d12c25191bcc3f11d08547", 1, LocalDate.now(), "a few notes for a test");
+    Note note = new Note("62d12c25191bcc3f11d08547", 4, LocalDate.now(), "a few notes for a test");
     @Autowired
     NoteRepository noteRepository;
 
@@ -71,7 +71,7 @@ public class NoteControllerIT {
     @Test
     void updateNoteTest_shouldReturnStatus404() throws Exception {
         //Arrange
-        Note note1 = new Note(1, LocalDate.now(), "a few notes for a test");
+        Note note1 = new Note(6, LocalDate.now(), "a few notes for a test");
         note1.setId("62d12c25191bcc3f11d08544");
         //Act
         mvc.perform(put("/note")
@@ -110,7 +110,7 @@ public class NoteControllerIT {
         //Act
         mvc.perform(get("/note")
                    .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).param("patientId", "1"))
+                   .accept(MediaType.APPLICATION_JSON).param("patientId", "4"))
            .andDo(print())
            .andExpect(status().isOk());
 

@@ -1,8 +1,7 @@
 package com.mediscreen.note.util;
 
-import com.mediscreen.note.dto.NoteDto;
+import com.mediscreen.note.DTO.NoteDto;
 import com.mediscreen.note.model.Note;
-import com.mediscreen.note.util.NoteMapper;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

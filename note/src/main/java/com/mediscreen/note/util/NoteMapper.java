@@ -1,6 +1,6 @@
 package com.mediscreen.note.util;
 
-import com.mediscreen.note.dto.NoteDto;
+import com.mediscreen.note.DTO.NoteDto;
 import com.mediscreen.note.model.Note;
 import org.springframework.stereotype.Component;
 

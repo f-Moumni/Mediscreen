@@ -1,6 +1,6 @@
 package com.mediscreen.note.controller;
 
-import com.mediscreen.note.dto.NoteDto;
+import com.mediscreen.note.DTO.NoteDto;
 import com.mediscreen.note.exception.RessourceNotFoundException;
 import com.mediscreen.note.service.NoteService;
 import com.mediscreen.note.util.NoteMapper;
