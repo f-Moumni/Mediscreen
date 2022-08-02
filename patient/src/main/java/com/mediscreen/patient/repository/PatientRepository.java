@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * patient repository
+ */
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 

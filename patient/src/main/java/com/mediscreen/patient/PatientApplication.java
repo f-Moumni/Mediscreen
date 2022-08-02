@@ -17,11 +17,5 @@ public class PatientApplication {
         SpringApplication.run(PatientApplication.class, args);
     }
 
-    @Bean
-    public Docket patientApi() {
 
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                                                      .apis(RequestHandlerSelectors.basePackage("com.mediscreen.patient.controller"))
-                                                      .build();
-    }
 }

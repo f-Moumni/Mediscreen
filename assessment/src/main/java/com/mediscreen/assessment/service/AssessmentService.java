@@ -9,35 +9,44 @@ import com.mediscreen.assessment.proxy.NoteProxy;
 import com.mediscreen.assessment.proxy.PatientProxy;
 import com.mediscreen.assessment.util.Calculator;
 import com.mediscreen.assessment.util.ReportMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * AssessmentService class assesses the level of diabetes risk and generates a report
+ */
 @Service
-public class AssessmentService {
+public class AssessmentService implements IAssessmentService {
 
-
-    private final NoteProxy noteProxy;
+    private final Logger       LOGGER = LoggerFactory.getLogger(AssessmentService.class);
+    private final NoteProxy    noteProxy;
     private final PatientProxy patientProxy;
-    private final Calculator calculator;
+    private final Calculator   calculator;
     private final ReportMapper reportMapper;
 
     @Autowired
     public AssessmentService(NoteProxy noteProxy, PatientProxy patientProxy, Calculator ageCalculator, ReportMapper reportMapper) {
+
         this.noteProxy    = noteProxy;
         this.patientProxy = patientProxy;
         this.calculator   = ageCalculator;
         this.reportMapper = reportMapper;
     }
-
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public RiskLevel riskAssess(PatientDto patient) {
 
-        boolean    isOlderThenThirty        = calculator.isOlderThenThirty(patient.getBirthdate());
-        Gender     gender                   = patient.getGender();
-        int        terminologyTriggersCount = calculateTerminologyTriggers(Math.toIntExact(patient.getId()));
+        LOGGER.info("assessment of the level of risk for patient {} {}", patient.getFirstName(), patient.getLastName());
+        boolean isOlderThenThirty        = calculator.isOlderThenThirty(patient.getBirthdate());
+        Gender  gender                   = patient.getGender();
+        int     terminologyTriggersCount = calculateTerminologyTriggers(Math.toIntExact(patient.getId()));
 
         if (terminologyTriggersCount >= 8) {
             return RiskLevel.EARLY_ONSET;
@@ -63,26 +72,42 @@ public class AssessmentService {
         }
     }
 
+    /**
+     * Calculate the terminology Triggers present in the patient notes
+     * @param patientId patient id
+     * @return number of terminology Triggers
+     */
     private int calculateTerminologyTriggers(int patientId) {
-
+        LOGGER.info("calculate Terminology Triggers for patient id {}", patientId);
         List<String> notes = noteProxy.getAllNotes(patientId)
                                       .stream()
                                       .map(NoteDto::getNote)
                                       .collect(Collectors.toList());
         return calculator.calculateTriggersNumber(notes);
     }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public ReportDto generateReportById(long patientId) {
+        LOGGER.info("generation of report for patient id: {}", patientId);
         PatientDto patient   = patientProxy.getPatientById(patientId);
         RiskLevel  riskLevel = riskAssess(patient);
-        int age=calculator.calculateAge(patient.getBirthdate());
-        return reportMapper.toReportDto(patient,riskLevel,age);
+        int        age       = calculator.calculateAge(patient.getBirthdate());
+        return reportMapper.toReportDto(patient, riskLevel, age);
     }
+
+
+     /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<ReportDto> generateReportByFamilyName(String familyName) {
-         return patientProxy.getPatientByFamilyName(familyName).stream().map(p -> {
-            RiskLevel  riskLevel = riskAssess(p);
-            int age=calculator.calculateAge(p.getBirthdate());
-            return reportMapper.toReportDto(p,riskLevel,age);
+        LOGGER.info("generation of report for patients with familyName: {}", familyName);
+        return patientProxy.getPatientByFamilyName(familyName).stream().map(p -> {
+            RiskLevel riskLevel = riskAssess(p);
+            int       age       = calculator.calculateAge(p.getBirthdate());
+            return reportMapper.toReportDto(p, riskLevel, age);
         }).collect(Collectors.toList());
 
     }

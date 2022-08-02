@@ -21,17 +21,6 @@ public class AssessmentApplication {
 		SpringApplication.run(AssessmentApplication.class, args);
 	}
 
-	@Bean
-	public Docket assessmentApi() {
 
-		return new Docket(DocumentationType.SWAGGER_2).select()
-													  .apis(RequestHandlerSelectors.basePackage("com.mediscreen.assessment.controller"))
-													  .build();
-	}
-
-	@Bean
-	public CustomErrorDecoder errorDecoder() {
-		return new CustomErrorDecoder();
-	}
 
 }

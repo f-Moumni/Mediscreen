@@ -1,5 +1,6 @@
 package com.mediscreen.note;
 
+import com.mediscreen.note.exception.CustomErrorDecoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -19,12 +20,6 @@ public class NoteApplication {
         SpringApplication.run(NoteApplication.class, args);
     }
 
-    @Bean
-    public Docket noteApi() {
 
-        return new Docket(DocumentationType.SWAGGER_2).select()
-                                                      .apis(RequestHandlerSelectors.basePackage("com.mediscreen.note.controller"))
-                                                      .build();
-    }
 
 }

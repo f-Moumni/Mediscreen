@@ -6,10 +6,19 @@ public class PatientDto {
 
     private long   id;
     @NotBlank(message = "required")
+    /*
+     * patient's family name
+     */
     private String family;
     @NotBlank(message = "required")
+    /*
+     * patient's first name
+     */
     private String given;
     @NotBlank(message = "required")
+    /*
+     * patient's birthdate
+     */
     private String dob;
     @NotBlank(message = "required")
     private String sex;
