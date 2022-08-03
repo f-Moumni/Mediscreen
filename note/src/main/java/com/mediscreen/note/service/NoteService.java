@@ -67,6 +67,6 @@ public class NoteService implements INoteService {
     public PatientDto patientById(long id) throws RessourceNotFoundException {
         LOGGER.info("getting patient by id {}",id);
         return patientProxy.getPatientById(id)
-                           .orElseThrow(() -> new RessourceNotFoundException("note not found"));
+                           .orElseThrow(() -> new RessourceNotFoundException("patient with id: "+id+ " not found"));
     }
 }

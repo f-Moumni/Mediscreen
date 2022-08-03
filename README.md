@@ -40,7 +40,8 @@ To run Mediscreen App:
 - To run the tests for each microservice execute Test.bat with the command: `Test.bat`
 - To generate the project's reports site for each microservice execute Create_sites.bat, please run :`Create_sites.bat`
 
-### Architecture
+---------
+## Architecture
 
 
 1. Microservice architecture
@@ -51,3 +52,12 @@ To run Mediscreen App:
 
 
    ![](img/docker.png)
+
+---------
+## Reports
+
+   ![](img/patientJacoco.png)
+
+   ![](img/noteJacoco.png)
+
+   ![](img/assessmentJacoco.png)

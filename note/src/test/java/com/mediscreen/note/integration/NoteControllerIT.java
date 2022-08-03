@@ -69,19 +69,6 @@ public class NoteControllerIT {
     }
 
     @Test
-    void updateNoteTest_shouldReturnStatus404() throws Exception {
-        //Arrange
-        Note note1 = new Note(6, LocalDate.now(), "a few notes for a test");
-        note1.setId("62d12c25191bcc3f11d08544");
-        //Act
-        mvc.perform(put("/note")
-                   .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(note1)))
-           .andDo(print())
-           .andExpect(status().isNotFound());
-    }
-
-    @Test
     void deleteNoteTest_shouldReturnNoteDeleted() throws Exception {
 
         //Act
@@ -92,7 +79,6 @@ public class NoteControllerIT {
            .andExpect(status().isOk());
 
     }
-
     @Test
     void deleteNoteTest_shouldReturnStatus404() throws Exception {
 
