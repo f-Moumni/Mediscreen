@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -43,6 +44,7 @@ public class NoteControllerTest {
            .andExpect(status().isCreated());
 
     }
+
     @Test
     void updateNoteTest_shouldReturnNoteUpdated() throws Exception {
         //Arrange
@@ -53,12 +55,25 @@ public class NoteControllerTest {
                    .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(note)))
            .andDo(print())
            .andExpect(status().isOk());
+    }
+
+    @Test
+    void addNoteTest_shouldReturnStatus404() throws Exception {
+        //Arrange
+        when(noteService.saveNote(any(Note.class))).thenThrow(RessourceNotFoundException.class);
+        //Act
+        mvc.perform(post("/note")
+                   .contentType(MediaType.APPLICATION_JSON)
+                   .accept(MediaType.APPLICATION_JSON).content(JsonTestMapper.asJsonString(note)))
+           .andDo(print())
+           .andExpect(status().isNotFound());
 
     }
-   // @Test
+
+    @Test
     void updateNoteTest_shouldReturnStatus404() throws Exception {
         //Arrange
-        when(noteService.updateNote(note)).thenThrow(RessourceNotFoundException.class);
+        when(noteService.updateNote(any(Note.class))).thenThrow(RessourceNotFoundException.class);
         //Act
         mvc.perform(put("/note")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -67,6 +82,7 @@ public class NoteControllerTest {
            .andExpect(status().isNotFound());
 
     }
+
     @Test
     void deleteNoteTest_shouldReturnNoteDeleted() throws Exception {
         //Arrange
@@ -74,11 +90,12 @@ public class NoteControllerTest {
         //Act
         mvc.perform(delete("/note")
                    .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).param("id","62d12c25191bcc3f11d08547"))
+                   .accept(MediaType.APPLICATION_JSON).param("id", "62d12c25191bcc3f11d08547"))
            .andDo(print())
            .andExpect(status().isOk());
 
     }
+
     @Test
     void deleteNoteTest_shouldReturnStatus404() throws Exception {
         //Arrange
@@ -86,11 +103,12 @@ public class NoteControllerTest {
         //Act
         mvc.perform(delete("/note")
                    .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).param("id","62d12c25191bcc3f11d08547"))
+                   .accept(MediaType.APPLICATION_JSON).param("id", "62d12c25191bcc3f11d08547"))
            .andDo(print())
            .andExpect(status().isNotFound());
 
     }
+
     @Test
     void getAllNoteTest_shouldReturnListOfNote() throws Exception {
         //Arrange
@@ -98,7 +116,7 @@ public class NoteControllerTest {
         //Act
         mvc.perform(get("/note")
                    .contentType(MediaType.APPLICATION_JSON)
-                   .accept(MediaType.APPLICATION_JSON).param("patientId","1"))
+                   .accept(MediaType.APPLICATION_JSON).param("patientId", "1"))
            .andDo(print())
            .andExpect(status().isOk());
 

@@ -1,15 +1,29 @@
 package com.mediscreen.patient.dto;
 
-import java.time.LocalDate;
+import javax.validation.constraints.NotBlank;
 
 public class PatientDto {
-    private long      id;
-    private String    family;
-    private String    given;
+
+    private long   id;
+    @NotBlank(message = "required")
+    /*
+     * patient's family name
+     */
+    private String family;
+    @NotBlank(message = "required")
+    /*
+     * patient's first name
+     */
+    private String given;
+    @NotBlank(message = "required")
+    /*
+     * patient's birthdate
+     */
     private String dob;
-    private String    sex;
-    private String    address;
-    private String    phone;
+    @NotBlank(message = "required")
+    private String sex;
+    private String address;
+    private String phone;
 
     public PatientDto() {
 
@@ -25,7 +39,6 @@ public class PatientDto {
         this.address = address;
         this.phone   = phone;
     }
-
 
 
     public long getId() {

@@ -1,9 +1,8 @@
 package com.mediscreen.note.controller;
 
-import com.mediscreen.note.dto.NoteDto;
+import com.mediscreen.note.DTO.NoteDto;
 import com.mediscreen.note.model.Note;
 import com.mediscreen.note.service.NoteService;
-import com.mediscreen.note.util.JsonTestMapper;
 import com.mediscreen.note.util.NoteMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

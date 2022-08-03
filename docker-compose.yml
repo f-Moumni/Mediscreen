@@ -1,0 +1,89 @@
+version: '3.9'
+
+services:
+    mysqldb:
+        image: mysql:8
+        container_name: mysqldb
+        ports:
+            - "3308:3306"
+        environment:
+            MYSQL_DATABASE: patientDB
+            MYSQL_ROOT_PASSWORD: rootroot
+        volumes:
+            - sqldata:/var/lib/mysql
+        networks:
+           - mediscreen_network
+    patient:
+        build: ./patient/.
+        image: patient
+        container_name: patient
+        environment:
+            MYSQL_URL: mysqldb
+            MYSQL_DATABASE: patientDB
+            MYSQL_USER: root
+            MYSQL_PASSWORD: rootroot
+        depends_on:
+            - mysqldb
+        ports:
+            - "8081:8081"
+        networks:
+            - mediscreen_network
+        restart: on-failure
+
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        ports:
+            - "27017:27017"
+        volumes:
+            - mongodata:/data/db
+        networks:
+            - mediscreen_network
+    notes:
+        build: ./note/.
+        image: notes
+        container_name: notes
+        environment:
+            PATIENT_URL: patient:8081
+            MONGODB_HOST: mongodb
+            MONGODB_PORT: 27017
+            MONGODB_DB: notes
+        depends_on:
+            - mongodb
+        ports:
+            - "8082:8082"
+        networks:
+            - mediscreen_network
+    assessment:
+        build: ./assessment/.
+        image: assessment
+        container_name: assessment
+        environment:
+            PATIENT_URL: patient:8081
+            NOTE_URL: notes:8082
+        depends_on:
+            - notes
+            - patient
+        ports:
+            - "8080:8080"
+        networks:
+            - mediscreen_network
+    ui:
+        build: ./UI/.
+        image: ui
+        container_name: ui
+        depends_on:
+            - notes
+            - patient
+            - assessment
+        ports:
+            - "4200:4200"
+        networks:
+            - mediscreen_network
+networks:
+    mediscreen_network:
+        driver: bridge
+
+volumes:
+    sqldata:
+    mongodata:

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class NoteExceptionHandler {
 
     @ExceptionHandler(RessourceNotFoundException.class)
-    public ResponseEntity<Object> handleDataNoteFoundException(
+    public ResponseEntity<Object> handleRessourceNotFoundException(
             RessourceNotFoundException e, WebRequest request) {
 
         ExceptionDetails exception = new ExceptionDetails(LocalDateTime.now(),

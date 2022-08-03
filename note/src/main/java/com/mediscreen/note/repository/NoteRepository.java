@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * note repository interface
+ */
 @Repository
 public interface NoteRepository extends MongoRepository<Note,String>{
 

@@ -6,11 +6,6 @@ import {HttpHeaders} from "@angular/common/http";
 
 export const environment = {
   production: false,
-  httpOptions : {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json','Access-Control-Allow-Origin':'*' })
-  },
-  Patient_API : 'http://localhost:8081',
-  Note_API:'http://localhost:8082',
 };
 
 /*

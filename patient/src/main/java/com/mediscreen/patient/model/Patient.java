@@ -4,6 +4,8 @@ import com.mediscreen.patient.constant.Gender;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
 
 @Entity
@@ -16,18 +18,19 @@ public class Patient {
     /**
      * Patient's first name
      **/
-    @Column(name = "first_name", nullable = false)
-    @NotBlank(message = "the first name cannot be empty or null")
+    @Column(nullable = false)
+    @NotBlank(message = "required")
     private String firstName;
 
     /**
      * Patient's last name
      **/
-    @Column(name = "last_name", nullable = false)
-    @NotBlank(message = "the last name cannot be empty or null")
-    private String    lastName;
+    @Column(nullable = false)
+    @NotBlank(message = "required")
+    private String lastName;
 
     @Column(nullable = false)
+    @PastOrPresent
     private LocalDate birthdate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -52,7 +55,6 @@ public class Patient {
         this.address   = address;
         this.phone     = phone;
     }
-
 
 
     public long getId() {

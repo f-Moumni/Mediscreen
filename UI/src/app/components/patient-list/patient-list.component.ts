@@ -18,11 +18,13 @@ export class PatientListComponent implements OnInit {
   // @ts-ignore
   dataSubject = new BehaviorSubject<Patient[]>(null);
   saveForm!: FormGroup;
+  editForm!: FormGroup;
   patient !: Patient;
   page: number = 1;
   count: number = 0;
   tableSize: number = 5;
-
+  maxDate: any;
+  @ViewChild('cancelEditbutton') cancelEditbutton!: any;
   @ViewChild('closebutton') closebutton!: any;
   @ViewChild('cancelbutton') cancelbutton!: any;
 
@@ -44,11 +46,44 @@ export class PatientListComponent implements OnInit {
         Validators.minLength(10),
         Validators.maxLength(20)]]
     })
+
+    this.editForm = this.formBuilder.group({
+      id: [null],
+      firstName: [null, [
+        Validators.required,
+        Validators.maxLength(24)]],
+      lastName: [null, [
+        Validators.required,
+        Validators.maxLength(24)]],
+      birthdate: [null, [
+        Validators.required]],
+      gender: [Gender.MASCULINE,
+        Validators.required
+      ],
+      address: [null, Validators.minLength(5)],
+      phone: [null, [
+        Validators.minLength(10),
+        Validators.maxLength(20)]]
+    })
   }
 
   ngOnInit(): void {
+    this.futureDateDisable();
     this.getPatients();
+  }
 
+  futureDateDisable() {
+    var date: any = new Date();
+    var todayDate: any = date.getDate();
+    var month: any = date.getMonth() + 1;
+    var year: any = date.getFullYear()
+    if (todayDate < 10) {
+      todayDate = '0' + todayDate;
+    }
+    if (month < 10) {
+      month = '0' + month
+    }
+    this.maxDate = year + "-" + month + "-" + todayDate;
   }
 
   getPatients() {
@@ -102,4 +137,30 @@ export class PatientListComponent implements OnInit {
     this.page = event;
   }
 
+  onLoadUpdateForm(patient: any) {
+    this.editForm.setValue(
+      {
+        id: patient.id,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
+        birthdate: patient.birthdate,
+        gender: patient.gender,
+        address: patient.address,
+        phone: patient.phone
+      })
+  }
+
+  onEditPatient() {
+    let patient = this.editForm.value
+    this.patientService.updatePatient(patient).pipe(
+      take(1),
+      tap(p => {
+        this.dataSubject.next([
+          ...this.dataSubject.value.filter((p => p.id !== patient.id))]);
+        this.dataSubject.next([p,
+          ...this.dataSubject.value]);
+        this.patients = this.dataSubject.value;
+      })).subscribe()
+    this.cancelEditbutton.nativeElement.click();
+  }
 }

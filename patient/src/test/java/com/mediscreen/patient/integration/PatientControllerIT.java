@@ -1,6 +1,7 @@
 package com.mediscreen.patient.integration;
 
 import com.mediscreen.patient.constant.Gender;
+import com.mediscreen.patient.exception.RessourceNotFoundException;
 import com.mediscreen.patient.model.Patient;
 import com.mediscreen.patient.util.JsonTestMapper;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static java.time.LocalDate.now;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -34,7 +37,6 @@ public class PatientControllerIT {
 
     @Test
     void getAllPatientsTest_shouldReturnListOfPatients() throws Exception {
-
         //Act
         mvc.perform(get("/patient/all")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -46,7 +48,6 @@ public class PatientControllerIT {
 
     @Test
     void updatePatientTest_shouldReturnPatientUpdated() throws Exception {
-
         //Act
         mvc.perform(put("/patient")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +58,6 @@ public class PatientControllerIT {
 
     @Test
     void addPatientTest_shouldReturnPatientAdded() throws Exception {
-
         //Act
         mvc.perform(post("/patient")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,6 @@ public class PatientControllerIT {
     }
     @Test
     void removePatientTest_shouldReturnPatientAdded() throws Exception {
-
         //Act
         mvc.perform(delete("/patient")
                    .contentType(MediaType.APPLICATION_JSON)
@@ -77,6 +76,39 @@ public class PatientControllerIT {
            .andExpect(status().isOk());
 
     }
+    @Test
+    void getPatientByIdTest_shouldThrowException() throws Exception {
+        //Act
+        mvc.perform(get("/patient")
+                   .contentType(MediaType.APPLICATION_JSON)
+                   .accept(MediaType.APPLICATION_JSON)
+                   .param("id", "3"))
+           .andDo(print())
+           .andExpect(status().isNotFound());
 
+    }
+
+    @Test
+    void getPatientByIdTest_shouldReturnPatient() throws Exception {
+        //Act
+        mvc.perform(get("/patient")
+                   .contentType(MediaType.APPLICATION_JSON)
+                   .accept(MediaType.APPLICATION_JSON)
+                   .param("id", "1"))
+           .andDo(print())
+           .andExpect(status().isOk());
+
+    }
+    @Test
+    void getPatientByLastNameTest_shouldReturnPatient() throws Exception {
+        //Act
+        mvc.perform(get("/patient/lastname")
+                   .contentType(MediaType.APPLICATION_JSON)
+                   .accept(MediaType.APPLICATION_JSON)
+                   .param("lastname", "doe"))
+           .andDo(print())
+           .andExpect(status().isOk());
+
+    }
 
 }

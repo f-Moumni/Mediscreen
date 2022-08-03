@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Note} from "../../model/note.model";
 import {BehaviorSubject, take, tap} from "rxjs";
-import {NoteService} from "../../service/NoteService";
+import {NoteService} from "../../service/note.service";
 import {ActivatedRoute} from "@angular/router";
 
 @Component({

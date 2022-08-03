@@ -1,4 +1,17 @@
-<header>
-  <img height="auto" src="assets/img.png" width="100 px">
+<div class="header clearfix">
+  <nav>
+    <ul class="nav nav-pills pull-right">
+      <li><a routerLink='/home' routerLinkActive="active">Home</a></li>
+      <li><a [routerLinkActiveOptions]="{ exact: true }" routerLink='/patients' routerLinkActive="active">Manage
+                                                                                                          Patients</a>
+      </li>
 
-</header>
+    </ul>
+  </nav>
+  <a class="navbar-brand" href="home"> <img
+    alt="Logo"
+    height="auto"
+    src="assets/logo.png"
+    width="40"
+  > </a>
+</div>

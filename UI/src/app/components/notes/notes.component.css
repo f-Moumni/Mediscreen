@@ -198,7 +198,8 @@ table.table .avatar {
 }
 
 .modal textarea.form-control {
-  resize: vertical;
+  height: 200px;
+  resize: none;
 }
 
 .modal .btn {

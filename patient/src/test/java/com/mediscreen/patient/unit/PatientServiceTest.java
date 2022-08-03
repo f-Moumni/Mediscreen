@@ -93,4 +93,33 @@ public class PatientServiceTest {
         //Assert
         assertThat(result).isEqualToComparingFieldByField(patient);
     }
+
+    @Test
+    void findByTest_shouldReturnSaved() throws RessourceNotFoundException {
+        //Arrange
+        when(patientRepository.findById(any())).thenReturn(Optional.of(patient));
+        //Act
+        Patient result = patientService.findById(1);
+        //Assert
+        assertThat(result).isEqualToComparingFieldByField(patient);
+    }
+
+    @Test
+    void findByTest_shouldThrowRessourceNotFoundException() throws RessourceNotFoundException {
+        //Arrange
+        when(patientRepository.findById(any())).thenReturn(Optional.empty());
+        //Act //Assert
+        assertThrows(RessourceNotFoundException.class, () -> patientService.findById(1));
+    }
+
+    @Test
+    void findByLatName_shouldReturn() {
+        //Arrange
+        when(patientRepository.findByLastName(any())).thenReturn(List.of(patient));
+        //Act
+        List<Patient> result = patientService.findByLatName("doe");
+        //Assert
+        assertThat(result.size()).isEqualTo(1);
+        assertThat(result.get(0)).isEqualToComparingFieldByField(patient);
+    }
 }

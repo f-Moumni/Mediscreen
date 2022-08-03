@@ -1,120 +1,261 @@
-<div class="container">
-  <form (ngSubmit)="onEditPatient()" [formGroup]="editForm" class="form-card">
-    <div class="modal-body">
-      <h3 class="h3 my-5 font-weight-normal text-center">Manage Patient</h3>
-      <div class="group-control">
+<div>
+  <app-header></app-header>
+</div>
+<div class="ng-container">
+  <div class="container">
+    <h3 class="h3 my-5 font-weight-normal text-center">Patient's Medical Record</h3>
+    <form [formGroup]="patientForm" class="form-card">
+      <div class="form-body">
         <div class="form-group">
-          <label>Gender</label>
-          <select
-            class="form-control"
-            formControlName="gender" required
+          <input
+            [ngClass]="{'none' : report.riskLevel==RiskLevel.NONE ,
+                    'borderline':report.riskLevel==RiskLevel.BORDERLINE,
+                    'inDanger':report.riskLevel==RiskLevel.IN_DANGER,
+                     'early_onSet':report.riskLevel==RiskLevel.EARLY_ONSET}" class="material-icons"
+            class="form-control" formControlName="riskLevel" readonly
+            type="text"
           >
-            <option value="FEMININE">FEMININE</option>
-            <option value="MASCULINE">MASCULINE</option>
-          </select>
-          <div
-            *ngIf="editForm.controls['gender'].invalid && (editForm.controls['gender'].dirty ||
-              editForm.controls['gender'].touched)"
-            class="alert alert-danger"
-          >
-            <div *ngIf="editForm.controls['gender'].errors?.['required']">
-              gender is required.
-            </div>
+        </div>
+        <div class="group-control">
+          <div class="form-group">
+            <label>Gender</label>
+            <input class="form-control" formControlName="gender" readonly type="text">
+          </div>
+          <div class="form-group">
+            <label>ID</label>
+            <input class="form-control" formControlName="id" readonly type="text">
           </div>
         </div>
-        <div class="form-group">
-          <label>ID</label>
-          <input class="form-control" formControlName="id" readonly required type="text">
-        </div>
-      </div>
-      <div class="group-control">
-        <div class="form-group">
-          <label>First Name</label>
-          <input class="form-control" formControlName="firstName" required type="text">
-          <div
-            *ngIf="editForm.controls['firstName'].invalid && (editForm.controls['firstName'].dirty || editForm
-              .controls['firstName'].touched)"
-            class="alert alert-danger"
-          >
-            <div *ngIf="editForm.controls['firstName'].errors?.['required']">
-              firstName is required.
-            </div>
-            <div *ngIf="editForm.controls['firstName'].errors?.['maxlength']">
-              firstName must be less than 50 characters long.
-            </div>
+        <div class="group-control">
+          <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" formControlName="name" readonly type="text">
           </div>
+          <div class="form-group">
+            <label>Age</label>
+            <input class="form-control " formControlName="age" readonly type="text">
+          </div>
+
         </div>
-        <div class="form-group">
-          <label>Last Name</label>
-          <input class="form-control" formControlName="lastName" required type="text">
-          <div
-            *ngIf="editForm.controls['lastName'].invalid && (editForm.controls['lastName'].dirty ||
-              editForm.controls['lastName'].touched)"
-            class="alert alert-danger"
-          >
-            <div *ngIf="editForm.controls['lastName'].errors?.['required']">
-              lastName is required.
-            </div>
-            <div *ngIf="editForm.controls['lastName'].errors?.['maxlength']">
-              lastName must be less than 50 characters long.
-            </div>
+        <div class="group-control">
+          <div class="form-group">
+            <label>Address</label>
+            <textarea class="form-control" formControlName="address" readonly></textarea>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input class="form-control" formControlName="phone" readonly type="text">
           </div>
         </div>
       </div>
-      <div class="group-control">
-        <div class="form-group">
-          <label>Birthdate</label>
-          <input class="form-control " formControlName="birthdate" required type="Date">
-          <div
-            *ngIf="editForm.controls['birthdate'].invalid && (editForm.controls['birthdate'].dirty || editForm
-              .controls['birthdate'].touched)"
-            class="alert alert-danger"
+    </form>
+  </div>
+</div>
+<div class="ng-container">
+  <div class="container">
+
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-xs-4">
+              <input
+                #name [(ngModel)]="searchTerm" aria-label="Search" class="form-control w-25 p-3"
+                name="searchTerm" placeholder="Search Notes" type="search"
+              >
+            </div>
+            <div class="col-xs-8">
+              <a
+                class="btn btn-success"
+                data-toggle="modal"
+                href="#addNoteModal"
+              ><i class="material-icons">&#xE147;</i> <span>Add New Note</span></a>
+            </div>
+          </div>
+        </div>
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody
+            *ngFor=" let note of (notes | filter: searchTerm )| paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };
+          let i = index"
           >
-            <div *ngIf="editForm.controls['birthdate'].errors?.['required']">
-              birthdate is required.
-            </div>
-            <div *ngIf="editForm.controls['birthdate'].errors?.['max']">
-              birthday must be in the past
-            </div>
-          </div>
+          <tr>
+            <td>  {{note.date}}</td>
+            <td> {{note.note}}</td>
+            <td><a (click)="onLoadEditForm(note)" class="edit" data-toggle="modal" href="#editNoteModal"><i
+              class="material-icons"
+              data-toggle="tooltip"
+              title="Edit"
+            >&#xE254;</i></a>
+              <a (click)="onLoadDeleteForm(note)" class="delete" data-toggle="modal" href="#deleteNoteModal"><i
+                class="material-icons"
+                data-toggle="tooltip"
+                title="Delete"
+              >&#xE872;</i></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="clearfix">
+          <ul class="pagination">
+            <pagination-controls
+              (pageChange)="onTableDataChange($event)"
+              nextLabel="Next"
+              previousLabel="Prev"
+            ></pagination-controls>
+          </ul>
         </div>
-        <div class="form-group">
-          <label>Phone</label>
-          <input class="form-control" formControlName="phone" type="text">
-          <div
-            *ngIf="editForm.controls['phone'].invalid && (editForm.controls['phone'].dirty ||
-              editForm.controls['phone'].touched)"
-            class="alert alert-danger"
-          >
-            <div *ngIf="editForm.controls['phone'].errors?.['minlength']">
-              phone must be at least 10 characters long.
-            </div>
-            <div *ngIf="editForm.controls['phone'].errors?.['maxlength']">
-              phone must be less than 20 characters long.
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>Address</label>
-        <textarea class="form-control" formControlName="address"></textarea>
-        <div
-          *ngIf="editForm.controls['address'].invalid && (editForm.controls['address'].dirty ||
-              editForm.controls['address'].touched)"
-          class="alert alert-danger"
-        >
-          <div *ngIf="editForm.controls['address'].errors?.['minlength']">
-            address must be at least 5 characters long.
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <input (click)="onCancel()" class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
-        <input class="btn btn-success" type="submit" value="Update">
       </div>
     </div>
+  </div>
 
-  </form>
+  <!-- Add Modal HTML -->
+  <ng-container>
+    <div class="modal fade" id="addNoteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form (ngSubmit)="onSaveNote()" [formGroup]="saveForm">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Note</h4>
+              <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>Date</label>
+                <input class="form-control" formControlName="date" required type="date">
+                <div
+                  *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
+              saveForm.controls['date'].touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="saveForm.controls['date'].errors?.['required']">
+                    date is required.
+                  </div>
+                  <div *ngIf="saveForm.controls['date'].errors?.['max']">
+                    date must be in the past
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Note</label>
+                  <textarea class="form-control" formControlName="note" required></textarea>
+                  <div
+                    *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
+              saveForm.controls['note'].touched)"
+                    class="alert alert-danger"
+                  >
+                    <div *ngIf="saveForm.controls['note'].errors?.['required']">
+                      note is required.
+                    </div>
+                    <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
+                      note must be at least 5 characters long.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input #addCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+              <input [disabled]="saveForm.invalid" class="btn btn-success" type="submit" value="Add">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Edit Modal HTML-->
+  <ng-container *ngIf="isLoad==true">
+    <div class="modal fade" id="editNoteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form (ngSubmit)="onEditNote()" [formGroup]="editNoteForm">
+            <div class="modal-header">
+              <h4 class="modal-title">Edit Patient</h4>
+              <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label>ID</label>
+                <input class="form-control" formControlName="id" readonly required type="text">
+              </div>
+              <label>Date</label>
+              <input class="form-control" formControlName="date" required type="date">
+              <div
+                *ngIf="saveForm.controls['date'].invalid && (saveForm.controls['date'].dirty ||
+              saveForm.controls['date'].touched)"
+                class="alert alert-danger"
+              >
+                <div *ngIf="saveForm.controls['date'].errors?.['require']">
+                  date is required.
+                </div>
+                <div *ngIf="saveForm.controls['date'].errors?.['max']">
+                  date must be in the past
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Note</label>
+                <textarea class="form-control" formControlName="note" required></textarea>
+                <div
+                  *ngIf="saveForm.controls['note'].invalid && (saveForm.controls['note'].dirty ||
+              saveForm.controls['note'].touched)"
+                  class="alert alert-danger"
+                >
+                  <div *ngIf="saveForm.controls['note'].errors?.['required']">
+                    note is required.
+                  </div>
+                  <div *ngIf="saveForm.controls['note'].errors?.['minlength']">
+                    note must be at least 5 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <input #editCancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+              <input [disabled]="editNoteForm.invalid" class="btn btn-success" type="submit" value="Save">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- Delete Modal HTML -->
+  <ng-container>
+    <div class="modal fade" id="deleteNoteModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Delete Note</h4>
+              <button aria-hidden="true" class="close" data-dismiss="modal" type="button">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p>Are you sure you want to delete these Records?</p>
+              <p class="text-warning"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+              <input #cancelbutton class="btn btn-default" data-dismiss="modal" type="button" value="Cancel">
+              <input
+                (click)="doRemoveNote()" class="btn btn-danger" type="submit"
+                value="Delete"
+              >
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
 </div>
-<app-notes></app-notes>
+<app-footer></app-footer>
