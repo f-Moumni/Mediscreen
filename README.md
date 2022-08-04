@@ -33,7 +33,9 @@ To run Mediscreen App:
    
 4. When all jars are built, perform the command. : `docker-compose up -d`
 
-5. To stop the application run the command : `docker-compose down`
+5. Open the application on the link `http://localhost:4200/`
+
+6. To stop the application run the command : `docker-compose down`
 
 ### Testing
 
