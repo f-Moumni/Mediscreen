@@ -5,4 +5,4 @@ cd ..\note
 call mvn verify site
 cd ..\assessment
 call mvn verify site
-docker-compose down
+cd ..

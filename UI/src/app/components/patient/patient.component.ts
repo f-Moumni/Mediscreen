@@ -117,12 +117,7 @@ export class PatientComponent implements OnInit {
         this.getReportPatient();
       })).subscribe()
     this.addCancelbutton.nativeElement.click();
-    this.saveForm.setValue(
-      {
-        date: this.date,
-        note: ""
-      }
-    )
+    this.saveForm.controls['note'].reset()
 
   }
 
